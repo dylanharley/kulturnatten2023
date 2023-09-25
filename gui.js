@@ -1,1 +1,6 @@
-console.log("GUI!")
+class GUI {
+    constructor(canvas){
+        this.canvas = canvas
+    }
+
+}
