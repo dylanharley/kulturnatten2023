@@ -1,18 +1,16 @@
-var myCanvas = createCanvas(winWidth, winHeight);
-myCanvas.parent("quantumDiv");
+var test_gate = new QuantumGate("X", 50,150,150,80, ()=>{console.log("hi")})
+console.log(test_gate)
 
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-  }
+    var myCanvas = createCanvas(windowWidth, windowHeight);
+    myCanvas.parent("quantumDiv");
+}
   
 function draw() {
-if (mouseIsPressed) {
-    fill(0);
-} else {
-    fill(255);
-}
-ellipse(mouseX, mouseY, 80, 80);
+
+    test_gate.draw()
+
 }
 
 function windowResized() {
