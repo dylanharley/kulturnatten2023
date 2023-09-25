@@ -1,12 +1,14 @@
 class Clickable {
-    constructor(onclick){
-        this.onclick = onclick
+    constructor(){
     }
     
-    draw(){
-    } 
+    onclick(onclick){
+        this.onclick=onclick // Kinda love this method...
+        return this.onclick
+    }
 
     ismouseover(){
+        return false
     }
 
 }
