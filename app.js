@@ -9,11 +9,9 @@ function setup() {
     var myCanvas = createCanvas(windowWidth, windowHeight);
     myCanvas.parent("quantumDiv");
 
-    Xgate = new QuantumGate("X", 150, windowHeight-100,100,100, ()=>{console.log("hi")})
-    Ygate = new QuantumGate("Y", 300, windowHeight-100,100,100, ()=>{console.log("hi")})
-    Zgate = new QuantumGate("Z", 450, windowHeight-100,100,100, ()=>{console.log("hi")})
-    Hgate = new QuantumGate("H", 600, windowHeight-100,100,100, ()=>{console.log("hi")})
-    measurement = new QuantumGate("M", 750, windowHeight-100,100,100, ()=>{console.log("hi")})
+    Xgate = new QuantumGate("Vend", 150, windowHeight-100,100,100, ()=>{console.log("hi")})
+    Ygate = new QuantumGate("Vend ikke", 300, windowHeight-100,100,100, ()=>{console.log("hi")})
+    Zgate = new QuantumGate("Superposition", 450, windowHeight-100,100,100, ()=>{console.log("hi")})
 
     gui = new GUI(myCanvas)
 }
@@ -24,18 +22,19 @@ function draw() {
     background(255)
  
     gui.drawGatesPanel()
+    gui.drawCircuitDiagram()
     gui.drawClickables()
+
     // gates
     Xgate.draw()
     Ygate.draw()
     Zgate.draw()
-    Hgate.draw()
-    measurement.draw()
     fill(255)
 }
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    gui.resize()
  }
 
  function mouseClicked(){

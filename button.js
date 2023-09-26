@@ -8,8 +8,16 @@ class Button extends Clickable {
         this.height = height
 
         this.fill = fill
+        this.hoverFill = 150 
     }
 
+    set_fill(newFill){
+        this.fill = newFill
+    }
+
+    set_hover_fill(newFill){
+        this.hoverFill = newFill
+    }
 
     set_position(newX, newY) {
         this.x = newX
@@ -32,7 +40,11 @@ class Button extends Clickable {
         // TODO: Draw nicer buttons        
         stroke(100)
         strokeWeight(1)
-        fill(this.fill)
+        if (this.ismouseover()){
+            fill(this.hoverFill)
+        } else {
+            fill(this.fill)
+        }
         rect(this.x -this.width/2, this.y-this.height/2, this.width, this.height, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
 
         textAlign(CENTER)
