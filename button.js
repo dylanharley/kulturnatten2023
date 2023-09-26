@@ -29,28 +29,28 @@ class Button extends Clickable {
         this.height = newHeight
     }
 
-    ismouseover(){
+    ismouseover(sketch){
         // Simple test to see if the cursor is over the button
         // TODO: What about touch?
-       return (this.x-this.width/2 <= mouseX && this.x+this.width/2 >= mouseX && this.y-this.height/2 <= mouseY && this.y+this.height/2 >= mouseY)
+       return (this.x-this.width/2 <= sketch.mouseX && this.x+this.width/2 >= sketch.mouseX && this.y-this.height/2 <= sketch.mouseY && this.y+this.height/2 >= sketch.mouseY)
     }
 
 
-    draw(){
+    draw(sketch){
         // TODO: Draw nicer buttons        
-        stroke(100)
-        strokeWeight(1)
-        if (this.ismouseover()){
-            fill(this.hoverFill)
+        sketch.stroke(100)
+        sketch.strokeWeight(1)
+        if (this.ismouseover(sketch)){
+            sketch.fill(this.hoverFill)
         } else {
-            fill(this.fill)
+            sketch.fill(this.fill)
         }
-        rect(this.x -this.width/2, this.y-this.height/2, this.width, this.height, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
+        sketch.rect(this.x -this.width/2, this.y-this.height/2, this.width, this.height, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
 
-        textAlign(CENTER)
-        strokeWeight(0)
-        fill(0)
-        text(this.name, this.x, this.y)
+        sketch.textAlign(sketch.CENTER)
+        sketch.strokeWeight(0)
+        sketch.fill(0)
+        sketch.text(this.name, this.x, this.y)
     }
 
     click(){

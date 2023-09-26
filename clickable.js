@@ -7,7 +7,11 @@ class Clickable {
         return this.onclick
     }
 
-    ismouseover(){
+    ismouseover(sketch){
+        return false
+    }
+
+    draw(sketch){
         return false
     }
 

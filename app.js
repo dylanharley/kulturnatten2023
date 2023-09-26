@@ -1,44 +1,48 @@
-var Xgate
-var Ygate
-var Zgate
-var Hgate
-var measurement
 
-var gui
-function setup() {
-    var myCanvas = createCanvas(windowWidth, windowHeight);
-    myCanvas.parent("quantumDiv");
+const s = (sketch)=>{
+    let Xgate
+    let Igate
+    let Hgate
 
-    Xgate = new QuantumGate("Vend", 150, windowHeight-100,100,100, ()=>{console.log("hi")})
-    Ygate = new QuantumGate("Vend ikke", 300, windowHeight-100,100,100, ()=>{console.log("hi")})
-    Zgate = new QuantumGate("Superposition", 450, windowHeight-100,100,100, ()=>{console.log("hi")})
+    let gui
 
-    gui = new GUI(myCanvas)
+    sketch.setup = ()=>{
+        var myCanvas = sketch.createCanvas(sketch.windowWidth, sketch.windowHeight);
+        myCanvas.parent("quantumDiv");
+
+        Xgate = new QuantumGate("Vend", 150, sketch.windowHeight-100,100,100, ()=>{console.log("hi")})
+        Igate = new QuantumGate("Vend ikke", 300, sketch.windowHeight-100,100,100, ()=>{console.log("hi")})
+        Hgate = new QuantumGate("Superposition", 450, sketch.windowHeight-100,100,100, ()=>{console.log("hi")})
+        console.log(sketch)
+        gui = new GUI(sketch)
+    }
+    
+    sketch.draw = ()=>{
+
+        // background elements
+        sketch.background(255)
+    
+        gui.drawGatesPanel()
+        gui.drawCircuitDiagram()
+        gui.drawClickables()
+
+        // gates
+        Xgate.draw(sketch)
+        Hgate.draw(sketch)
+        Igate.draw(sketch)
+    }
+
+    sketch.windowResized = ()=>{
+        sketch.resizeCanvas(sketch.windowWidth, sketch.windowHeight);
+        gui.resize()
+    }
+
+    sketch.mouseClicked = ()=>{
+        // every button should have a function connected to it that is fired when it is clicked.
+        // clicking defaults to no action unless explicitly assigned otherwise
+        gui.mouseClicked()
+    }
+
 }
-  
-function draw() {
 
-    // background elements
-    background(255)
- 
-    gui.drawGatesPanel()
-    gui.drawCircuitDiagram()
-    gui.drawClickables()
-
-    // gates
-    Xgate.draw()
-    Ygate.draw()
-    Zgate.draw()
-    fill(255)
-}
-
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-    gui.resize()
- }
-
- function mouseClicked(){
-    // every button should have a function connected to it that is fired when it is clicked.
-    // clicking defaults to no action unless explicitly assigned otherwise
-    gui.mouseClicked()
-}
+var firstCanvas = new p5(s)
