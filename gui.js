@@ -4,7 +4,7 @@ class GUI {
         }
     
     init(){
-
+        
         this.clickables = []
 
         // add rule if screen is too small?
@@ -52,12 +52,19 @@ class GUI {
         this.circuitLineSecondGateX = 2*(this.circuitLineEndX-this.circuitLineStartX)/4+this.circuitLineStartX
         this.circuitLineThirdGateX = 3*(this.circuitLineEndX-this.circuitLineStartX)/4+this.circuitLineStartX
 
-        this.circuitButtonSelectFirstGate = new Button("First gate", this.circuitLineFirstGateX, this.circuitLineY, 100, 100, [100,255,100])
+        this.circuitButtonSelectFirstGate = new CircuitSlot("First gate", this.circuitLineFirstGateX, this.circuitLineY, 100, 100,0)
         this.clickables.push(this.circuitButtonSelectFirstGate)
-        this.circuitButtonSelectFirstGate = new Button("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100, [100,255,100])
+        this.circuitButtonSelectFirstGate = new CircuitSlot("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100,0)
         this.clickables.push(this.circuitButtonSelectFirstGate)
-        this.circuitButtonSelectFirstGate = new Button("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100, [100,255,100])
+        this.circuitButtonSelectFirstGate = new CircuitSlot("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100,0)
         this.clickables.push(this.circuitButtonSelectFirstGate)
+
+        this.Xgate = new QuantumGate("Vend", this.gatesPanelPaddingLeft+100, this.sketch.windowHeight-100,100,100, [100,100,100])
+        this.clickables.push(this.Xgate)
+        this.Igate = new QuantumGate("Vend ikke", this.gatesPanelPaddingLeft + 0.5*this.gatesPanelWidth, this.sketch.windowHeight-100,100,100, [100,100,100])
+        this.clickables.push(this.Igate)
+        this.Hgate = new QuantumGate("Superposition", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,100,100, [100,100,100])
+        this.clickables.push(this.Hgate)
     }
 
     set_2d_sketch(sketch){
@@ -100,8 +107,9 @@ class GUI {
     }
 
     draw3D(){
+        this.sketch3D.clear();
         this.sketch3D.rotateX(this.sketch3D.frameCount*0.01)
         this.sketch3D.rotateY(this.sketch3D.frameCount*0.5);
-        this.sketch3D.sphere()
+        this.sketch3D.cylinder(100,10)
     }
 }

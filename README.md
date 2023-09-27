@@ -13,3 +13,4 @@ _Cosmetics:_
 - Clicking animations / transitions
 - Display SVG for measurement
 - Display SVG as button?
+- Option to view as Bloch sphere

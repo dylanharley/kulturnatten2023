@@ -1,4 +1,5 @@
 var gui = new GUI()
+var gamemanager = new GameManager();
 
 const s = (sketch)=>{
     let Xgate
@@ -15,9 +16,6 @@ const s = (sketch)=>{
 
         gui.set_2d_sketch(sketch)
         gui.init()
-        Xgate = new QuantumGate("Vend", gui.gatesPanelPaddingLeft+100, sketch.windowHeight-100,100,100, [100,100,100])
-        Igate = new QuantumGate("Vend ikke", gui.gatesPanelPaddingLeft + 0.5*gui.gatesPanelWidth, sketch.windowHeight-100,100,100, [100,100,100])
-        Hgate = new QuantumGate("Superposition", gui.gatesPanelPaddingLeft + gui.gatesPanelWidth-100, sketch.windowHeight-100,100,100, [100,100,100])
     }
     
     sketch.draw = ()=>{
@@ -28,19 +26,11 @@ const s = (sketch)=>{
         gui.drawGatesPanel()
         gui.drawCircuitDiagram()
         gui.drawClickables()
-
-        // gates
-        Xgate.draw(sketch)
-        Hgate.draw(sketch)
-        Igate.draw(sketch)
     }
 
     sketch.windowResized = ()=>{
         sketch.resizeCanvas(sketch.windowWidth, sketch.windowHeight);
         gui.resize()
-        Xgate.set_position(gui.gatesPanelPaddingLeft+100,sketch.windowHeight-100);
-        Igate.set_position(gui.gatesPanelPaddingLeft + 0.5*gui.gatesPanelWidth,sketch.windowHeight-100);
-        Hgate.set_position(gui.gatesPanelPaddingLeft + gui.gatesPanelWidth-100,sketch.windowHeight-100);
     }
 
     sketch.mouseClicked = ()=>{
