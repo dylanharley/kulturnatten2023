@@ -43,7 +43,7 @@ class Button extends Clickable {
         sketch.stroke(100)
         sketch.strokeWeight(1)
         if (this.ismouseover(sketch)){
-            sketch.fill(this.hoverFill)
+            sketch.fill(this.hoverFill);
             sketch.rect(this.x -this.width/2 - this.hoverFat/2, this.y-this.height/2 - this.hoverFat/2, this.width + this.hoverFat, this.height + this.hoverFat, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
         } else {
             sketch.fill(this.fill)
