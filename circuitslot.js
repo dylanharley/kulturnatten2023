@@ -42,7 +42,7 @@ class CircuitSlot extends Clickable {
         }
         if (this.selected == 1) {
             // Drawing when selected
-            sketch.fill([100+50*Math.sin(sketch.frameCount/8),100+50*Math.sin(sketch.frameCount/8),200+50*Math.sin(sketch.frameCount/8)]);
+            sketch.fill([100+50*Math.sin(sketch.frameCount/8),100+50*Math.cos(sketch.frameCount/8),200]);
             sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)
             // Check whether a gate was chosen
             if (gamemanager.selectedgate != -1) {

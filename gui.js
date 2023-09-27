@@ -32,6 +32,12 @@ class GUI {
         this.runOnceButton.onclick(()=>{
             if (gamemanager.gameState == 0) {
                 console.log("play the game!");
+                this.clickables.forEach((element)=>{
+                    if (element.hidden == 1) {
+                        if (Math.random() > 0.5) element.gateType = "X";
+                        else element.gateType = "I";
+                    }
+                })
             } else {
                 console.log("it was very foolish of you to press this button at that moment")
             }
@@ -66,7 +72,7 @@ class GUI {
 
         this.circuitButtonSelectFirstGate = new CircuitSlot("First gate", this.circuitLineFirstGateX, this.circuitLineY, 100, 100,0)
         this.clickables.push(this.circuitButtonSelectFirstGate)
-        this.circuitButtonSelectFirstGate = new CircuitSlot("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100,0)
+        this.circuitButtonSelectFirstGate = new CircuitSlot("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100,1)
         this.clickables.push(this.circuitButtonSelectFirstGate)
         this.circuitButtonSelectFirstGate = new CircuitSlot("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100,0)
         this.clickables.push(this.circuitButtonSelectFirstGate)
