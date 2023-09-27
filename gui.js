@@ -100,6 +100,8 @@ class GUI {
     }
 
     draw3D(){
+        this.sketch3D.rotateX(this.sketch3D.frameCount*0.01)
+        this.sketch3D.rotateY(this.sketch3D.frameCount*0.5);
         this.sketch3D.sphere()
     }
 }
