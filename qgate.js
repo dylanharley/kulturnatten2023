@@ -1,6 +1,7 @@
 class QuantumGate extends Button {
-    constructor(name, posX, posY, width, height,fill){
+    constructor(name, posX, posY, width, height,fill,gateType){
         super(name, posX, posY, width, height, fill)
+        this.gateType = gateType
     }
 
     get_matrix(){
@@ -11,7 +12,7 @@ class QuantumGate extends Button {
 
     onclick() {
         if (gamemanager.gameState == 1) {
-            gamemanager.set_gate(this.name)
+            gamemanager.set_gate(this.gateType)
             gamemanager.set_state(0)
         }
     }

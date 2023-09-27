@@ -29,7 +29,13 @@ class GUI {
         this.runOnceButtonHeight = 50
         this.runOnceButtonColor = [255,100,100]
         this.runOnceButton = new Button("SPIL",this.runOnceButtonCenterX,this.runOnceButtonCenterY,this.runOnceButtonWidth, this.runOnceButtonHeight,this.runOnceButtonColor)
-        this.runOnceButton.onclick(()=>{console.log("Run simulation once pressed")}) // For debug purposes
+        this.runOnceButton.onclick(()=>{
+            if (gamemanager.gameState == 0) {
+                console.log("play the game!");
+            } else {
+                console.log("it was very foolish of you to press this button at that moment")
+            }
+        })
         this.clickables.push(this.runOnceButton)
 
         // "Run 1000 times" button
@@ -39,7 +45,13 @@ class GUI {
         this.runThousandButtonHeight = 50
         this.runThousandButtonColor = [255,100,100]
         this.runThousandButton = new Button("SPIL x1000",this.runThousandButtonCenterX,this.runThousandButtonCenterY,this.runThousandButtonWidth, this.runThousandButtonHeight,this.runThousandButtonColor)
-        this.runThousandButton.onclick(()=>{console.log("Run simulation 1000 times pressed")}) // For debug purposes
+        this.runThousandButton.onclick(()=>{
+            if (gamemanager.gameState == 0) {
+                console.log("play the game 1000 times!");
+            } else {
+                console.log("once again very foolish")
+            }
+        })
         this.clickables.push(this.runThousandButton)
      
         // CIRCUIT DIAGRAM SETTINGS
@@ -59,11 +71,11 @@ class GUI {
         this.circuitButtonSelectFirstGate = new CircuitSlot("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100,0)
         this.clickables.push(this.circuitButtonSelectFirstGate)
 
-        this.Xgate = new QuantumGate("Vend", this.gatesPanelPaddingLeft+100, this.sketch.windowHeight-100,100,100, [100,100,100])
+        this.Xgate = new QuantumGate("Vend", this.gatesPanelPaddingLeft+100, this.sketch.windowHeight-100,100,100, [200,100,100],"X")
         this.clickables.push(this.Xgate)
-        this.Igate = new QuantumGate("Vend ikke", this.gatesPanelPaddingLeft + 0.5*this.gatesPanelWidth, this.sketch.windowHeight-100,100,100, [100,100,100])
+        this.Igate = new QuantumGate("Vend ikke", this.gatesPanelPaddingLeft + 0.5*this.gatesPanelWidth, this.sketch.windowHeight-100,100,100, [255,255,255],"I")
         this.clickables.push(this.Igate)
-        this.Hgate = new QuantumGate("Superposition", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,100,100, [100,100,100])
+        this.Hgate = new QuantumGate("Superposition", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,100,100, [100,200,100],"H")
         this.clickables.push(this.Hgate)
     }
 
