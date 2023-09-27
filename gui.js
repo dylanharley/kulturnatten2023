@@ -1,14 +1,10 @@
 class GUI {
-    constructor(sketch){
-
-        this.init(sketch)
+    constructor(){
             
         }
     
-    init(sketch){
-        console.log(sketch)
-        this.sketch = sketch
-        
+    init(){
+
         this.clickables = []
 
         // add rule if screen is too small?
@@ -64,6 +60,14 @@ class GUI {
         this.clickables.push(this.circuitButtonSelectFirstGate)
     }
 
+    set_2d_sketch(sketch){
+        this.sketch = sketch
+    }
+
+    set_3d_sketch(sketch){
+        this.sketch3D = sketch
+    }
+
     resize(){
         this.init(this.sketch)
     }
@@ -95,4 +99,7 @@ class GUI {
         this.sketch.line(this.circuitLineStartX,this.circuitLineY,this.circuitLineEndX,this.circuitLineY)
     }
 
+    draw3D(){
+        this.sketch3D.sphere()
+    }
 }

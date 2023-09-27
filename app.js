@@ -1,16 +1,20 @@
+var gui = new GUI()
 
 const s = (sketch)=>{
     let Xgate
     let Igate
     let Hgate
 
-    let gui
 
     sketch.setup = ()=>{
         var myCanvas = sketch.createCanvas(sketch.windowWidth, sketch.windowHeight);
-        myCanvas.parent("quantumDiv");        
+        myCanvas.parent("quantumDiv");     
+        console.log("sketch")   
         console.log(sketch)
-        gui = new GUI(sketch)
+        //gui = new GUI(sketch)
+
+        gui.set_2d_sketch(sketch)
+        gui.init()
         Xgate = new QuantumGate("Vend", gui.gatesPanelPaddingLeft+100, sketch.windowHeight-100,100,100, [100,100,100])
         Igate = new QuantumGate("Vend ikke", gui.gatesPanelPaddingLeft + 0.5*gui.gatesPanelWidth, sketch.windowHeight-100,100,100, [100,100,100])
         Hgate = new QuantumGate("Superposition", gui.gatesPanelPaddingLeft + gui.gatesPanelWidth-100, sketch.windowHeight-100,100,100, [100,100,100])
@@ -48,3 +52,20 @@ const s = (sketch)=>{
 }
 
 var firstCanvas = new p5(s)
+
+const s2 = (sketch) => {
+
+    sketch.setup = () => {
+        var myCanvas = sketch.createCanvas(sketch.windowWidth, sketch.windowHeight, sketch.WEBGL);
+        myCanvas.parent("coinDiv");        
+        gui.set_3d_sketch(sketch)
+
+    }
+
+    sketch.draw = ()=> {
+        gui.draw3D()
+    }
+
+}
+
+var secondCanvas = new p5(s2)
