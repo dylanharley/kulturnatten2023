@@ -11,9 +11,9 @@ const s = (sketch)=>{
         myCanvas.parent("quantumDiv");        
         console.log(sketch)
         gui = new GUI(sketch)
-        Xgate = new QuantumGate("Vend", gui.gatesPanelPaddingLeft+100, sketch.windowHeight-100,100,100, ()=>{console.log("hi")})
-        Igate = new QuantumGate("Vend ikke", gui.gatesPanelPaddingLeft + 0.5*gui.gatesPanelWidth, sketch.windowHeight-100,100,100, ()=>{console.log("hi")})
-        Hgate = new QuantumGate("Superposition", gui.gatesPanelPaddingLeft + gui.gatesPanelWidth-100, sketch.windowHeight-100,100,100, ()=>{console.log("hi")})
+        Xgate = new QuantumGate("Vend", gui.gatesPanelPaddingLeft+100, sketch.windowHeight-100,100,100, [100,100,100])
+        Igate = new QuantumGate("Vend ikke", gui.gatesPanelPaddingLeft + 0.5*gui.gatesPanelWidth, sketch.windowHeight-100,100,100, [100,100,100])
+        Hgate = new QuantumGate("Superposition", gui.gatesPanelPaddingLeft + gui.gatesPanelWidth-100, sketch.windowHeight-100,100,100, [100,100,100])
     }
     
     sketch.draw = ()=>{

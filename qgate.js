@@ -1,6 +1,7 @@
 class QuantumGate extends Button {
-    constructor(name, posX, posY, width, height){
-        super(name, posX, posY, width, height, [100,200,200])
+    constructor(name, posX, posY, width, height,fill){
+        super(name, posX, posY, width, height, fill)
+        console.log("aah")
     }
 
     get_matrix(){

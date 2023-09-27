@@ -56,11 +56,11 @@ class GUI {
         this.circuitLineSecondGateX = 2*(this.circuitLineEndX-this.circuitLineStartX)/4+this.circuitLineStartX
         this.circuitLineThirdGateX = 3*(this.circuitLineEndX-this.circuitLineStartX)/4+this.circuitLineStartX
 
-        this.circuitButtonSelectFirstGate = new Button("First gate", this.circuitLineFirstGateX, this.circuitLineY, 100, 100, this.sketch.color(100,255,100))
+        this.circuitButtonSelectFirstGate = new Button("First gate", this.circuitLineFirstGateX, this.circuitLineY, 100, 100, [100,255,100])
         this.clickables.push(this.circuitButtonSelectFirstGate)
-        this.circuitButtonSelectFirstGate = new Button("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100, this.sketch.color(100,255,100))
+        this.circuitButtonSelectFirstGate = new Button("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100, [100,255,100])
         this.clickables.push(this.circuitButtonSelectFirstGate)
-        this.circuitButtonSelectFirstGate = new Button("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100, this.sketch.color(100,255,100))
+        this.circuitButtonSelectFirstGate = new Button("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100, [100,255,100])
         this.clickables.push(this.circuitButtonSelectFirstGate)
     }
 

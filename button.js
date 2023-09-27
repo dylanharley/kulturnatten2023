@@ -8,7 +8,9 @@ class Button extends Clickable {
         this.height = height
 
         this.fill = fill
-        this.hoverFill = 150 
+        while (fill.length < 3) fill.push(0);
+        this.hoverFill = [.9*fill[0],.9*fill[1],.9*fill[2]]
+        this.hoverFat = 5; // makes hovering induce fattening
     }
 
     set_fill(newFill){
@@ -42,10 +44,11 @@ class Button extends Clickable {
         sketch.strokeWeight(1)
         if (this.ismouseover(sketch)){
             sketch.fill(this.hoverFill)
+            sketch.rect(this.x -this.width/2 - this.hoverFat/2, this.y-this.height/2 - this.hoverFat/2, this.width + this.hoverFat, this.height + this.hoverFat, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
         } else {
             sketch.fill(this.fill)
+            sketch.rect(this.x -this.width/2, this.y-this.height/2, this.width, this.height, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
         }
-        sketch.rect(this.x -this.width/2, this.y-this.height/2, this.width, this.height, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
 
         sketch.textAlign(sketch.CENTER)
         sketch.strokeWeight(0)
