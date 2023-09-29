@@ -1,5 +1,5 @@
 class QuantumGate extends Button {
-    constructor(name, posX, posY, width, height,fill,gateType){
+    constructor(name, posX, posY, width, height, fill, gateType){
         super(name, posX, posY, width, height, fill)
         this.gateType = gateType
     }
@@ -10,11 +10,18 @@ class QuantumGate extends Button {
         return [[1,0],[0,1]]
     }
 
-    onclick() {
-        if (gamemanager.gameState == 1) {
-            gamemanager.set_gate(this.gateType)
-            gamemanager.set_state(0)
-        }
+    click() {
+        if (arguments.length > 0){
+            gamemanager = arguments[0]
+            // Check that we are picking a gate. In that case, select the right gate.
+            if (gamemanager.gameState == PICKING_GATE) {
+                gamemanager.set_gate(this.gateType)
+                gamemanager.set_state(PICKING_SLOT)
+                gamemanager.gui.circuitButtonSelectFirstGate.deselect()
+                gamemanager.gui.circuitButtonSelectSecondGate.deselect()
+                gamemanager.gui.circuitButtonSelectThirdGate.deselect()
+            }    
+        } 
     }
 
 }

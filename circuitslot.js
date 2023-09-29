@@ -1,34 +1,27 @@
-class CircuitSlot extends Clickable {
+class CircuitSlot extends Button {
 
-    constructor(name, posX, posY, width, height,hidden) {
-        super()
-        this.name = name
-        this.x = posX
-        this.y = posY
-        this.width = width
-        this.height = height
-        this.hidden=hidden
-        this.selected = 0
+    constructor(name, posX, posY, width, height, slot) {
+        super(name, posX, posY, width, height, [0,0,0])
+
+        this.hidden = false
+        this.selected = false
         this.gateType = "I"
-        this.hoverFat = 5
+        this.slot = slot
     }
 
-    set_position(newX,newY) {
-        this.x = newX
-        this.y = newY
+    toggle_hide(){
+        this.hidden = !this.hidden
     }
 
-    resize(newWidth, newHeight){
-        this.width = newWidth
-        this.height = newHeight
+    deselect(){
+        if (this.selected){
+            this.selected = false
+        }
     }
 
-    ismouseover(sketch){
-        // Simple test to see if the cursor is over the button
-        // TODO: What about touch?
-       return (this.x-this.width/2 <= sketch.mouseX && this.x+this.width/2 >= sketch.mouseX && this.y-this.height/2 <= sketch.mouseY && this.y+this.height/2 >= sketch.mouseY)
+    select_gate(gate){
+        this.gateType = gate
     }
-
 
     draw(sketch){
         // TODO: Draw nicer buttons        
@@ -36,41 +29,37 @@ class CircuitSlot extends Clickable {
         sketch.strokeWeight(1)
         let drawWidth = this.width;
         let drawHeight = this.height;
-        if (this.ismouseover(sketch) && gamemanager.gameState == 0) {
+
+        // Draw thicker button when the mouse is hovering over it
+        if (this.ismouseover(sketch) && (!this.hidden)) {
             drawWidth += this.hoverFat;
             drawHeight += this.hoverFat;
         }
-        if (this.selected == 1) {
-            // Drawing when selected
+        
+        // Check if the button has been selected
+        if (this.selected) {
+            // Rainbow!
             sketch.fill([100+50*Math.sin(sketch.frameCount/8),100+50*Math.cos(sketch.frameCount/8),200]);
-            sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)
-            // Check whether a gate was chosen
+            
+/*            // Check whether a gate was chosen
             if (gamemanager.selectedgate != -1) {
                 this.gateType=gamemanager.selectedgate;
                 this.selected = 0;
-            }
+            }*/
         } else {
             switch (this.gateType) {
                 case "I": // Drawing when identity
                     sketch.fill([255,255,255]);
-                    sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)
                     break
                 case "X": // Drawing when flipping
                     sketch.fill([200,100,100]);
-                    sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)
                     break
                 case "H": // Drawing when hadamarding
                     sketch.fill([100,200,100]);
-                    sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)
                     break
             }
-            if (this.ismouseover(sketch) && gamemanager.gameState == 0) {
-                sketch.rect(this.x - (this.hoverFat+this.width)/2, this.y-(this.hoverFat+this.height)/2, this.hoverFat+this.width, this.hoverFat+this.height, 15)
-            } else {
-                sketch.rect(this.x -this.width/2, this.y-this.height/2, this.width, this.height, 15)
-            }
         }
-        
+        sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)
         sketch.textAlign(sketch.CENTER)
         sketch.strokeWeight(0)
         sketch.fill(0)
@@ -78,16 +67,18 @@ class CircuitSlot extends Clickable {
     }
 
     click(){
-        if (this.selected == 1) {
-            this.selected = 0;
-            gamemanager.set_state(0);
+        if (arguments.length > 0){
+            gamemanager = arguments[0]
+        }
+        if (this.selected) {
+            this.selected = false;
+            gamemanager.set_state(PICKING_SLOT);
             return
         }
-        if (this.hidden == 0 && (gamemanager.gameState == 0)) { // i.e. if you can click it
-            this.selected = 1;
-            gamemanager.set_gate(-1);
-            gamemanager.set_state(1);
+        if (this.hidden == false && (gamemanager.gameState == PICKING_SLOT)) { // i.e. if you can click it
+            this.selected = true;
+            gamemanager.select_slot(this.slot);
+            gamemanager.set_state(PICKING_GATE);
         }
     }
-
 }

@@ -8,8 +8,10 @@ class Button extends Clickable {
         this.height = height
 
         this.fill = fill
-        while (fill.length < 3) fill.push(0);
-        this.hoverFill = [.9*fill[0],.9*fill[1],.9*fill[2]]
+        this.hoverFill = []
+        for (let i = 0; i < this.fill.length; i++){
+            this.hoverFill.push(0.9*fill[i])
+        }
         this.hoverFat = 5; // makes hovering induce fattening
     }
 
