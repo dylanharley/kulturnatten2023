@@ -35,6 +35,11 @@ var firstCanvas = new p5(s)
 
 const s2 = (sketch) => {
 
+    sketch.preload = ()=>{
+        sketch.coinBodyParts = [sketch.loadModel("./stl/coin_body.stl")]
+        sketch.coinDetails = [sketch.loadModel("./stl/coin_b_p1.stl"),sketch.loadModel("./stl/coin_b_p2.stl"),sketch.loadModel("./stl/coin_b_p3.stl"),sketch.loadModel("./stl/coin_q_p1.stl"),sketch.loadModel("./stl/coin_q_p2.stl"),sketch.loadModel("./stl/coin_q_p3.stl")]
+    }
+
     sketch.setup = () => {
         var myCanvas = sketch.createCanvas(sketch.windowWidth, sketch.windowHeight, sketch.WEBGL);
         myCanvas.parent("coinDiv");        
@@ -42,7 +47,17 @@ const s2 = (sketch) => {
     }
 
     sketch.draw = ()=> {
-        gamemanager.gui.draw3D()
+        //gamemanager.gui.draw3D()
+        sketch.clear()
+        sketch.scale(-5)
+        sketch.rotateX(sketch.frameCount*0.01)
+        sketch.rotateY(sketch.frameCount*0.05);
+
+        sketch.fill(220)
+        sketch.strokeWeight(0)
+        sketch.coinBodyParts.forEach((el)=>{sketch.model(el)})
+        sketch.fill("#8d42af")
+        sketch.coinDetails.forEach((el)=>{sketch.model(el)})
     }
 
 }
