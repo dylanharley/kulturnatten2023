@@ -33,6 +33,9 @@ const s = (sketch)=>{
 
 var firstCanvas = new p5(s)
 
+const Q_FACE = 0
+const CHIP_FACE = 1
+
 const s2 = (sketch) => {
 
     sketch.preload = ()=>{
@@ -46,18 +49,36 @@ const s2 = (sketch) => {
         gamemanager.gui.set_3d_sketch(sketch)
     }
 
-    sketch.draw = ()=> {
-        //gamemanager.gui.draw3D()
-        sketch.clear()
+    sketch.drawCoin = (faceup) => {
+        sketch.push()
         sketch.scale(-5)
-        sketch.rotateX(sketch.frameCount*0.01)
-        sketch.rotateY(sketch.frameCount*0.05);
-
         sketch.fill(220)
         sketch.strokeWeight(0)
+        if (faceup == Q_FACE){
+            sketch.translate(0,-0.14,0) 
+            sketch.rotateX(sketch.PI/2)
+            sketch.rotateZ(sketch.PI)   
+        } else {
+            sketch.translate(0,0.14,0) 
+            sketch.rotateX(sketch.PI/2)
+            sketch.rotateY(sketch.PI)
+            sketch.rotateZ(sketch.PI)
+
+        }
         sketch.coinBodyParts.forEach((el)=>{sketch.model(el)})
         sketch.fill("#8d42af")
-        sketch.coinDetails.forEach((el)=>{sketch.model(el)})
+        sketch.coinDetails.forEach((el)=>{sketch.model(el)})        
+        sketch.pop()
+    }
+
+    sketch.draw = ()=> {
+        // rather arbitrary camera position.
+        sketch.camera(0,-600,1000, 0, -100, 0)
+        sketch.clear()
+        gamemanager.gui.draw3D()
+
+        //sketch.rotateX(sketch.frameCount*0.01)
+        //sketch.rotateY(sketch.frameCount*0.05);
     }
 
 }

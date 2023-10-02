@@ -29,6 +29,7 @@ class GUI {
         this.runOnceButtonHeight = 50
         this.runOnceButtonColor = [255,100,100]
         this.runOnceButton = new Button("SPIL",this.runOnceButtonCenterX,this.runOnceButtonCenterY,this.runOnceButtonWidth, this.runOnceButtonHeight,this.runOnceButtonColor)
+        this.runOnceButton.onclick(()=>{this.startCoinFlippingAnimation()})
         /*this.runOnceButton.onclick(()=>{
             if (this.gamemanager.gameState == PICKING_SLOT) {
                 console.log("play the game!");
@@ -85,6 +86,15 @@ class GUI {
         this.clickables.push(this.Igate)
         this.Hgate = new QuantumGate("Superposition", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,100,100, [100,200,100], "H")
         this.clickables.push(this.Hgate)
+
+
+        // COIN FLIPPING
+        // Should also be able to work in the case where two coins have to be shown
+        this.coinAnimating = false
+        this.coinStartAnimation = 0
+        this.coinFaceUp = Q_FACE
+        this.coinSuperposition = false
+        this.coinAnimatingSuperposition = false
     }
 
     set_2d_sketch(sketch){
@@ -126,10 +136,51 @@ class GUI {
         this.sketch.line(this.circuitLineStartX,this.circuitLineY,this.circuitLineEndX,this.circuitLineY)
     }
 
+    startCoinFlippingAnimation(){
+        if (! this.coinAnimating){
+            this.coinStartAnimation = this.sketch3D.millis()
+            this.coinAnimating = true
+        }
+    }
+
+    animateCoin(){
+        var x = 0
+        var y = 0
+        var z = 0
+        var rot
+
+        const movementHomotopy = (t)=>{
+            // t is between 0 and 1
+            return 300*4*t*(1-t)
+        }
+
+        const rotationHomotopy = (t)=>{
+            console.log(t)
+            if (t<1/3){return 0}
+            else if (t<2/3) {return (-54*t*t*t+81*t*t-36*t+5)*Math.PI}
+            else {return Math.PI}
+        }
+
+        if (this.coinAnimating){
+            var dt = (this.sketch3D.millis()-this.coinStartAnimation)/2000
+            if (dt > 1){
+                this.coinAnimating = false
+                this.coinFaceUp = 1-this.coinFaceUp
+                return
+            }
+
+            y = -movementHomotopy(dt)
+            rot = rotationHomotopy(dt)
+            console.log(rot)
+            this.sketch3D.translate(x, y, z)
+            this.sketch3D.rotateZ(rot)
+        }
+        this.sketch3D.drawCoin(this.coinFaceUp)
+
+    }
+
     draw3D(){
         this.sketch3D.clear();
-        this.sketch3D.rotateX(this.sketch3D.frameCount*0.01)
-        this.sketch3D.rotateY(this.sketch3D.frameCount*0.5);
-        this.sketch3D.cylinder(100,10)
+        this.animateCoin()
     }
 }
