@@ -9,6 +9,21 @@ class CircuitSlot extends Button {
         this.slot = slot
     }
 
+    get_matrix(){
+        // Returns matrix corresponding to gate, depending on type of gate
+        // TODO: IMPLEMENT
+
+        if (this.gateType == "I"){
+            return [[1,0],[0,1]]
+        }
+        if (this.gateType == "H"){
+            return [[Math.sqrt(2)/2, Math.sqrt(2)/2],[Math.sqrt(2)/2,-Math.sqrt(2)/2]]
+        }
+        if (this.gateType == "X"){
+            return [[0,1],[1,0]]
+        }
+    }
+
     toggle_hide(){
         this.hidden = !this.hidden
     }

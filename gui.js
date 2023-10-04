@@ -29,7 +29,7 @@ class GUI {
         this.runOnceButtonHeight = 50
         this.runOnceButtonColor = [255,100,100]
         this.runOnceButton = new Button("SPIL",this.runOnceButtonCenterX,this.runOnceButtonCenterY,this.runOnceButtonWidth, this.runOnceButtonHeight,this.runOnceButtonColor)
-        this.runOnceButton.onclick(()=>{this.flipCoin()})
+        this.runOnceButton.onclick(()=>{this.gamemanager.play_once()})
         /*this.runOnceButton.onclick(()=>{
             if (this.gamemanager.gameState == PICKING_SLOT) {
                 console.log("play the game!");
@@ -170,6 +170,10 @@ class GUI {
         var rot = 0
         var coinSeparation = 300
 
+        const oscillation = (t)=>{
+            return 50*Math.sin(t)
+        }
+
         const movementHomotopy = (t)=>{
             // t is between 0 and 1
             return -300*4*t*(1-t)
@@ -203,6 +207,8 @@ class GUI {
             }
 
             if (this.coinAnimatingSuperposition){
+                y = movementHomotopy(dt)
+
                 if (this.coinSuperposition){
                     coinSeparation = separationHomotopy(dt)
                 } else {
@@ -213,7 +219,10 @@ class GUI {
                 rot = rotationHomotopy(dt)
     
             }
+            
         }
+
+
 
         // Draw one or two coins depending on the state
         if (this.coinSuperposition || this.coinAnimatingSuperposition) {
@@ -223,19 +232,22 @@ class GUI {
             this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(1-this.coinFaceUp)
             this.sketch3D.pop()
-            this.sketch3D.push()
 
             this.sketch3D.translate(-coinSeparation/2,-1,0)
             this.sketch3D.translate(x, y, z)
             this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
-            this.sketch3D.pop()
             
         } else {
             this.sketch3D.translate(x, y, z)
             this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
         }
+/*        // Draw shadow coin first.
+        this.sketch3D.fill([200,200,100,50])
+        this.sketch3D.noStroke()
+        this.sketch3D.cylinder(400,10,30)*/
+        
 
     }
 

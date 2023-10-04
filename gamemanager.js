@@ -17,6 +17,7 @@ class GameManager {
         this.gui = new GUI(this)
         this.circuitSlots = ["I", null, "I"]
         this.selectedSlot = 0
+        this.vectorState = [[1],[0]]
     }
 
     select_slot(slot){
@@ -44,5 +45,53 @@ class GameManager {
         }
     }
 
+    play_once(){
+        this.vectorState = [[1],[0]]
+        // Select the opponent's gate
+        if (Math.random()>0.5){
+            this.circuitSlots[1] = "I"
+            this.gui.circuitButtonSelectSecondGate.select_gate("I")
+        } else {
+            this.circuitSlots[1] = "X" 
+            this.gui.circuitButtonSelectSecondGate.select_gate("X")
+        }
+        this.set_state(PLAYING)
+
+        // Find out what the final state of the game is
+        let mat_mul = (A,B)=>{
+            let outDim1 = A.length
+            let outDim2 = B[0].length
+            let multDim = A[0].length
+
+            let C = []
+            for (let i = 0; i< outDim1; i++){
+                let tmpRow = []
+                // build up rows of mat one at the time
+                for (let k = 0; k < outDim2; k++){
+                    // multiply row of A and col of B 
+                    let tmpTotal = 0
+                    for (let l = 0; l < multDim; l++){
+                        tmpTotal = tmpTotal + A[i][l]*B[l][k]
+                    }
+                    tmpRow.push(tmpTotal)
+                }
+                C.push(tmpRow)
+            }
+            return C
+        }
+        this.vectorState = mat_mul(this.gui.circuitButtonSelectFirstGate.get_matrix(),this.vectorState)
+        this.vectorState = mat_mul(this.gui.circuitButtonSelectSecondGate.get_matrix(),this.vectorState)
+        this.vectorState = mat_mul(this.gui.circuitButtonSelectThirdGate.get_matrix(),this.vectorState)
+
+        // Cheat: sample a probability distribution and see if player wins or not.
+        if (Math.random()<Math.pow(Math.abs(this.vectorState[0][0]),2)){
+            console.log("You win!")
+        } else {
+            console.log("You lose :/")
+        }
+
+
+        this.set_state(PICKING_SLOT)
+    }
 
 }

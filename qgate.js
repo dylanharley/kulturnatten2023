@@ -4,11 +4,7 @@ class QuantumGate extends Button {
         this.gateType = gateType
     }
 
-    get_matrix(){
-        // Returns matrix corresponding to gate, depending on type of gate
-        // TODO: IMPLEMENT
-        return [[1,0],[0,1]]
-    }
+
 
     click() {
         if (arguments.length > 0){
