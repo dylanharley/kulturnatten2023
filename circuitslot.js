@@ -72,6 +72,9 @@ class CircuitSlot extends Button {
                 case "H": // Drawing when hadamarding
                     sketch.fill([100,200,100]);
                     break
+                case "?": // Drawing when hadamarding
+                    sketch.fill([100,100,200]);
+                    break
             }
         }
         sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)

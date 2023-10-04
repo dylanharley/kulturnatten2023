@@ -77,6 +77,7 @@ class GUI {
         this.clickables.push(this.circuitButtonSelectFirstGate)
         this.circuitButtonSelectSecondGate = new CircuitSlot("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100, 1)
         this.circuitButtonSelectSecondGate.toggle_hide()
+        this.circuitButtonSelectSecondGate.select_gate("?")
         this.clickables.push(this.circuitButtonSelectSecondGate)
         this.circuitButtonSelectThirdGate = new CircuitSlot("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100, 2)
         this.clickables.push(this.circuitButtonSelectThirdGate)
@@ -163,6 +164,10 @@ class GUI {
             this.animating = true
             let newAnimation = this.animationQueue.shift()
             newAnimation()
+        } else if (this.animationQueue.length == 0 && this.gamemanager.state == PLAYING){
+        // if queue is empty, and we are playing, game is over.
+            this.gamemanager.set_state(PICKING_SLOT)
+            this.circuitButtonSelectSecondGate.select_gate("?")
         }
     }
 
@@ -199,15 +204,13 @@ class GUI {
         }
 
         const reunionHomotopy = (t)=>{
-            console.log(t)
-            console.log(separationHomotopy(1-t))
             return separationHomotopy(1-t)
         }
 
         if (this.animating){
             var dt = (this.sketch3D.millis()-this.coinStartAnimation)/2000
             if (dt > 1){            
-                if (!this.coinAnimatingSuperposition && this.coinAnimating){
+                if (!this.coinAnimatingSuperposition && this.coinAnimating && !this.coinSuperposition){
                     this.coinFaceUp = 1-this.coinFaceUp
                 }
                 this.animating = false
@@ -237,16 +240,14 @@ class GUI {
 
         // Draw one or two coins depending on the state
         if (this.coinSuperposition || this.coinAnimatingSuperposition) {
-            this.sketch3D.push()
-            this.sketch3D.translate(coinSeparation/2,0,0)
             this.sketch3D.translate(x, y, z)
             this.sketch3D.rotateZ(rot)
+            this.sketch3D.push()
+            this.sketch3D.translate(coinSeparation/2,0,0)
             this.sketch3D.drawCoin(1-this.coinFaceUp)
             this.sketch3D.pop()
 
             this.sketch3D.translate(-coinSeparation/2,-1,0)
-            this.sketch3D.translate(x, y, z)
-            this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
             
         } else {

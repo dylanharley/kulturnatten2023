@@ -48,7 +48,10 @@ class GameManager {
     }
 
     play_once(){
+        // Reset state of game
         this.vectorState = [[1],[0]]
+        this.gui.coinSuperposition = false
+        this.gui.coinFaceUp = Q_FACE
         // Select the opponent's gate
         if (Math.random()>0.5){
             this.circuitSlots[1] = "I"
