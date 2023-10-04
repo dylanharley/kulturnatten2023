@@ -96,6 +96,10 @@ class GUI {
         this.coinFaceUp = Q_FACE
         this.coinSuperposition = false
         this.coinAnimatingSuperposition = false
+
+        // ANIMATION
+        this.animating = false
+        this.animationQueue = []
     }
 
     set_2d_sketch(sketch){
@@ -119,26 +123,10 @@ class GUI {
         })
     }
 
-    drawGatesPanel(){
-        this.sketch.fill(this.gatesPanelFill)
-        this.sketch.strokeWeight(this.gatesPanelStrokeWeight)
-        this.sketch.stroke(this.gatesPanelStroke)
-        this.sketch.rect(this.gatesPanelPaddingLeft, this.sketch.windowHeight-this.gatesPanelPaddingBottom-this.gatesPanelHeight, this.gatesPanelWidth, this.gatesPanelHeight, this.gatesPanelCornerRadius)
-    }
-
-    drawClickables(){
-        this.clickables.forEach((element)=>{element.draw(this.sketch)})
-    }    
-
-    drawCircuitDiagram(){
-        //Draw horizontal line
-        this.sketch.strokeWeight(this.circuitLineStrokeWeight)
-        this.sketch.stroke(this.circuitLineStroke)
-        this.sketch.line(this.circuitLineStartX,this.circuitLineY,this.circuitLineEndX,this.circuitLineY)
-    }
+    // 3D animations
 
     flipCoin(){
-        if (! this.coinAnimating){
+        if (!this.coinAnimating){
             this.coinStartAnimation = this.sketch3D.millis()
             this.coinAnimating = true
         }
@@ -162,6 +150,27 @@ class GUI {
         }
 
     }
+
+    wait(){
+        this.coinStartAnimation = this.sketch3D.millis()
+    }
+
+
+    // Queue management
+
+    advanceQueue(){
+        if (this.animationQueue.length > 0 && !this.animating){
+            this.animating = true
+            let newAnimation = this.animationQueue.shift()
+            newAnimation()
+        }
+    }
+
+    queueAnimation(animation){
+        this.animationQueue.push(animation)
+    }
+
+    // 3D drawing stuff
 
     animateCoin(){
         var x = 0
@@ -195,33 +204,35 @@ class GUI {
             return separationHomotopy(1-t)
         }
 
-        if (this.coinAnimating){
+        if (this.animating){
             var dt = (this.sketch3D.millis()-this.coinStartAnimation)/2000
             if (dt > 1){            
-                if (!this.coinAnimatingSuperposition){
+                if (!this.coinAnimatingSuperposition && this.coinAnimating){
                     this.coinFaceUp = 1-this.coinFaceUp
                 }
+                this.animating = false
                 this.coinAnimating = false
                 this.coinAnimatingSuperposition = false
                 return
+
             }
 
-            if (this.coinAnimatingSuperposition){
-                y = movementHomotopy(dt)
-
-                if (this.coinSuperposition){
-                    coinSeparation = separationHomotopy(dt)
-                } else {
-                    coinSeparation = reunionHomotopy(dt)
-                }
-            } else {
-                y = movementHomotopy(dt)
-                rot = rotationHomotopy(dt)
+            if (this.coinAnimating){
+                if (this.coinAnimatingSuperposition){
+                    y = movementHomotopy(dt)
     
+                    if (this.coinSuperposition){
+                        coinSeparation = separationHomotopy(dt)
+                    } else {
+                        coinSeparation = reunionHomotopy(dt)
+                    }
+                } else {
+                    y = movementHomotopy(dt)
+                    rot = rotationHomotopy(dt)
+        
+                }
             }
-            
         }
-
 
 
         // Draw one or two coins depending on the state
@@ -254,5 +265,26 @@ class GUI {
     draw3D(){
         this.sketch3D.clear();
         this.animateCoin()
+        this.advanceQueue();
+    }
+
+    // 2D Drawing stuff
+
+    drawGatesPanel(){
+        this.sketch.fill(this.gatesPanelFill)
+        this.sketch.strokeWeight(this.gatesPanelStrokeWeight)
+        this.sketch.stroke(this.gatesPanelStroke)
+        this.sketch.rect(this.gatesPanelPaddingLeft, this.sketch.windowHeight-this.gatesPanelPaddingBottom-this.gatesPanelHeight, this.gatesPanelWidth, this.gatesPanelHeight, this.gatesPanelCornerRadius)
+    }
+
+    drawClickables(){
+        this.clickables.forEach((element)=>{element.draw(this.sketch)})
+    }    
+
+    drawCircuitDiagram(){
+        //Draw horizontal line
+        this.sketch.strokeWeight(this.circuitLineStrokeWeight)
+        this.sketch.stroke(this.circuitLineStroke)
+        this.sketch.line(this.circuitLineStartX,this.circuitLineY,this.circuitLineEndX,this.circuitLineY)
     }
 }

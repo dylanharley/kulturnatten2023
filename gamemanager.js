@@ -18,6 +18,8 @@ class GameManager {
         this.circuitSlots = ["I", null, "I"]
         this.selectedSlot = 0
         this.vectorState = [[1],[0]]
+
+        this.animations = {"I": ()=>{this.gui.wait()}, "X": ()=>{this.gui.flipCoin()}, "H": ()=>{if(!this.gui.coinSuperposition){this.gui.splitCoin()}else{this.gui.desplitCoin()}}}
     }
 
     select_slot(slot){
@@ -89,9 +91,14 @@ class GameManager {
         } else {
             console.log("You lose :/")
         }
-
+        
+        // Queue the animations. If there are two H gates, we need to both split and desplit.
+        this.gui.queueAnimation(this.animations[this.circuitSlots[0]])
+        this.gui.queueAnimation(this.animations[this.circuitSlots[1]])
+        this.gui.queueAnimation(this.animations[this.circuitSlots[2]])
 
         this.set_state(PICKING_SLOT)
+
     }
 
 }
