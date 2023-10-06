@@ -264,7 +264,7 @@ class GUI {
     }
 
     draw3D(){
-        this.sketch3D.clear();
+        //this.sketch3D.clear();
         this.animateCoin()
         this.advanceQueue();
     }
