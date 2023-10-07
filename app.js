@@ -39,8 +39,8 @@ const CHIP_FACE = 1
 const s2 = (sketch) => {
 
     sketch.preload = ()=>{
-        sketch.coinBodyParts = [sketch.loadModel("./stl/coin_body.stl")]
-        sketch.coinDetails = [sketch.loadModel("./stl/coin_b_p1.stl"),sketch.loadModel("./stl/coin_b_p2.stl"),sketch.loadModel("./stl/coin_b_p3.stl"),sketch.loadModel("./stl/coin_q_p1.stl"),sketch.loadModel("./stl/coin_q_p2.stl"),sketch.loadModel("./stl/coin_q_p3.stl")]
+        //sketch.coinBodyParts = [sketch.loadModel("./stl/coin_body.stl")]
+        //sketch.coinDetails = [sketch.loadModel("./stl/coin_b_p1.stl"),sketch.loadModel("./stl/coin_b_p2.stl"),sketch.loadModel("./stl/coin_b_p3.stl"),sketch.loadModel("./stl/coin_q_p1.stl"),sketch.loadModel("./stl/coin_q_p2.stl"),sketch.loadModel("./stl/coin_q_p3.stl")]
     }
 
     sketch.setup = () => {
@@ -53,7 +53,7 @@ const s2 = (sketch) => {
         sketch.push()
         sketch.scale(-5)
         sketch.fill(220)
-        sketch.strokeWeight(0)
+        sketch.strokeWeight(1)
         if (faceup == Q_FACE){
             sketch.translate(0,-0.14,0) 
             sketch.rotateX(sketch.PI/2)
@@ -65,9 +65,12 @@ const s2 = (sketch) => {
             sketch.rotateZ(sketch.PI)
 
         }
-        sketch.coinBodyParts.forEach((el)=>{sketch.model(el)})
-        sketch.fill("#8d42af")
-        sketch.coinDetails.forEach((el)=>{sketch.model(el)})        
+        sketch.noFill();
+        sketch.rotateX(sketch.PI/2);
+        sketch.cylinder(25,4);
+        //sketch.coinBodyParts.forEach((el)=>{sketch.model(el)})
+        //sketch.fill("#8d42af")
+        //sketch.coinDetails.forEach((el)=>{sketch.model(el)})        
         sketch.pop()
     }
 
