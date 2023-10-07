@@ -255,6 +255,7 @@ class GUI {
             this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
         }
+        conosole.log("actually drew coin");
 /*        // Draw shadow coin first.
         this.sketch3D.fill([200,200,100,50])
         this.sketch3D.noStroke()
@@ -264,7 +265,8 @@ class GUI {
     }
 
     draw3D(){
-        //this.sketch3D.clear();
+        this.sketch3D.clear();
+        console.log("draw3d called");
         this.animateCoin()
         this.advanceQueue();
     }
