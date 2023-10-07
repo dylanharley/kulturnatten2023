@@ -194,8 +194,9 @@ class GUI {
         }
 
         const rotationHomotopy = (t)=>{
-            if (t<1/3){return 0}
-            else if (t<2/3) {return (-54*t*t*t+81*t*t-36*t+5)*Math.PI}
+            var nonRotatingBit = 1/10;
+            if (t<nonRotatingBit){return 0}
+            else if (t<1-nonRotatingBit) {return 0.5*Math.PI*(1-Math.cos(Math.PI*(t-nonRotatingBit)/(1-2*nonRotatingBit)))}
             else {return Math.PI}
         }
 
@@ -240,13 +241,15 @@ class GUI {
         // Draw one or two coins depending on the state
         if (this.coinSuperposition || this.coinAnimatingSuperposition) {
             this.sketch3D.translate(x, y, z)
-            this.sketch3D.rotateZ(rot)
             this.sketch3D.push()
             this.sketch3D.translate(coinSeparation/2,0,0)
+            this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(1-this.coinFaceUp)
+            this.sketch3D.rotateZ(-rot)
             this.sketch3D.pop()
 
             this.sketch3D.translate(-coinSeparation/2,-1,0)
+            this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
             
         } else {
