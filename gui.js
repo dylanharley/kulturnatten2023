@@ -29,7 +29,7 @@ class GUI {
         this.runOnceButtonHeight = 50
         this.runOnceButtonColor = [255,100,100]
         this.runOnceButton = new Button("SPIL",this.runOnceButtonCenterX,this.runOnceButtonCenterY,this.runOnceButtonWidth, this.runOnceButtonHeight,this.runOnceButtonColor)
-        this.runOnceButton.onclick(()=>{this.gamemanager.play_once()})
+        this.runOnceButton.onclick(()=>{if (this.gamemanager.gameState < 2) this.gamemanager.play_once()})
         /*this.runOnceButton.onclick(()=>{
             if (this.gamemanager.gameState == PICKING_SLOT) {
                 console.log("play the game!");
@@ -164,10 +164,10 @@ class GUI {
             this.animating = true
             let newAnimation = this.animationQueue.shift()
             newAnimation()
-        } else if (this.animationQueue.length == 0 && this.gamemanager.state == PLAYING){
+        } else if (this.animationQueue.length == 0 && this.gamemanager.gameState == PLAYING){
         // if queue is empty, and we are playing, game is over.
-            this.gamemanager.set_state(PICKING_SLOT)
             this.circuitButtonSelectSecondGate.select_gate("?")
+            this.gamemanager.display_result()
         }
     }
 
