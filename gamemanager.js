@@ -110,6 +110,10 @@ class GameManager {
 
     }
 
+    reset() {
+        this.set_state(PICKING_SLOT);
+    }
+
     display_result(){
         this.set_state(DISPLAYING_RESULT);
     }

@@ -61,7 +61,12 @@ class GUI {
             }
         })*/
         this.clickables.push(this.runThousandButton)
-     
+        
+        // Result screen:
+        this.resultScreen = new ResultScreen();
+        this.resultScreen.onclick(()=>{console.log("help"); if (this.gamemanager.gameState = DISPLAYING_RESULT) this.resultScreen.resultScreenClick(this.gamemanager)});
+        this.clickables.push(this.resultScreen);
+
         // CIRCUIT DIAGRAM SETTINGS
         this.circuitLineStrokeWeight = 1
 
