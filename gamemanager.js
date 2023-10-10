@@ -2,6 +2,8 @@ const PICKING_SLOT = 0
 const PICKING_GATE = 1
 const PLAYING = 2
 const DISPLAYING_RESULT = 3
+const LOSE = 0
+const WIN = 1
 
 class GameManager {
     // Game states:
@@ -18,6 +20,7 @@ class GameManager {
         this.circuitSlots = ["I", null, "I"]
         this.selectedSlot = 0
         this.vectorState = [[1],[0]]
+        this.lastResult = WIN
 
         this.animations = {"I": ()=>{this.gui.wait()}, "X": ()=>{this.gui.flipCoin()}, "H": ()=>{if(!this.gui.coinSuperposition){this.gui.splitCoin()}else{this.gui.desplitCoin()}}}
     }
@@ -28,6 +31,7 @@ class GameManager {
 
     set_state(state) {
         this.gameState = state
+        console.log("state changed to " + state)
     }
 
     set_gate(gate) {
@@ -91,8 +95,10 @@ class GameManager {
         // Cheat: sample a probability distribution and see if player wins or not.
         if (Math.random()<Math.pow(Math.abs(this.vectorState[0][0]),2)){
             console.log("You win!")
+            this.lastResult = WIN
         } else {
             console.log("You lose :/")
+            this.lastResult = LOSE
         }
         
         // Queue the animations. If there are two H gates, we need to both split and desplit.
@@ -100,8 +106,13 @@ class GameManager {
         this.gui.queueAnimation(this.animations[this.circuitSlots[1]])
         this.gui.queueAnimation(this.animations[this.circuitSlots[2]])
 
-        this.set_state(PICKING_SLOT)
+        //this.set_state(PICKING_SLOT)
 
     }
+
+    display_result(){
+        this.set_state(DISPLAYING_RESULT);
+    }
+
 
 }

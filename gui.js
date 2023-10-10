@@ -29,7 +29,7 @@ class GUI {
         this.runOnceButtonHeight = 50
         this.runOnceButtonColor = [255,100,100]
         this.runOnceButton = new Button("SPIL",this.runOnceButtonCenterX,this.runOnceButtonCenterY,this.runOnceButtonWidth, this.runOnceButtonHeight,this.runOnceButtonColor)
-        this.runOnceButton.onclick(()=>{this.gamemanager.play_once()})
+        this.runOnceButton.onclick(()=>{if (this.gamemanager.gameState < 2) this.gamemanager.play_once()})
         /*this.runOnceButton.onclick(()=>{
             if (this.gamemanager.gameState == PICKING_SLOT) {
                 console.log("play the game!");
@@ -164,10 +164,10 @@ class GUI {
             this.animating = true
             let newAnimation = this.animationQueue.shift()
             newAnimation()
-        } else if (this.animationQueue.length == 0 && this.gamemanager.state == PLAYING){
+        } else if (this.animationQueue.length == 0 && this.gamemanager.gameState == PLAYING){
         // if queue is empty, and we are playing, game is over.
-            this.gamemanager.set_state(PICKING_SLOT)
             this.circuitButtonSelectSecondGate.select_gate("?")
+            this.gamemanager.display_result()
         }
     }
 
@@ -194,8 +194,9 @@ class GUI {
         }
 
         const rotationHomotopy = (t)=>{
-            if (t<1/3){return 0}
-            else if (t<2/3) {return (-54*t*t*t+81*t*t-36*t+5)*Math.PI}
+            var nonRotatingBit = 1/10;
+            if (t<nonRotatingBit){return 0}
+            else if (t<1-nonRotatingBit) {return 0.5*Math.PI*(1-Math.cos(Math.PI*(t-nonRotatingBit)/(1-2*nonRotatingBit)))}
             else {return Math.PI}
         }
 
@@ -208,7 +209,7 @@ class GUI {
         }
 
         if (this.animating){
-            var dt = (this.sketch3D.millis()-this.coinStartAnimation)/2000
+            var dt = (this.sketch3D.millis()-this.coinStartAnimation)/1000
             if (dt > 1){            
                 if (!this.coinAnimatingSuperposition && this.coinAnimating && !this.coinSuperposition){
                     this.coinFaceUp = 1-this.coinFaceUp
@@ -216,7 +217,6 @@ class GUI {
                 this.animating = false
                 this.coinAnimating = false
                 this.coinAnimatingSuperposition = false
-                return
 
             }
 
@@ -241,13 +241,15 @@ class GUI {
         // Draw one or two coins depending on the state
         if (this.coinSuperposition || this.coinAnimatingSuperposition) {
             this.sketch3D.translate(x, y, z)
-            this.sketch3D.rotateZ(rot)
             this.sketch3D.push()
             this.sketch3D.translate(coinSeparation/2,0,0)
+            this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(1-this.coinFaceUp)
+            this.sketch3D.rotateZ(-rot)
             this.sketch3D.pop()
 
             this.sketch3D.translate(-coinSeparation/2,-1,0)
+            this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
             
         } else {
@@ -255,7 +257,7 @@ class GUI {
             this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
         }
-        console.log("actually drew coin");
+        conosole.log("actually drew coin");
 /*        // Draw shadow coin first.
         this.sketch3D.fill([200,200,100,50])
         this.sketch3D.noStroke()
@@ -266,7 +268,6 @@ class GUI {
 
     draw3D(){
         this.sketch3D.clear();
-        console.log("draw3d called");
         this.animateCoin()
         this.advanceQueue();
     }
