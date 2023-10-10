@@ -1,5 +1,7 @@
 let gamemanager = new GameManager();
 
+const ACTUALLY_DRAW_COIN=true;
+
 const s = (sketch)=>{
 
     sketch.setup = ()=>{
@@ -39,8 +41,10 @@ const CHIP_FACE = 1
 const s2 = (sketch) => {
 
     sketch.preload = ()=>{
-        //sketch.coinBodyParts = [sketch.loadModel("./stl/coin_body.stl")]
-        //sketch.coinDetails = [sketch.loadModel("./stl/coin_b_p1.stl"),sketch.loadModel("./stl/coin_b_p2.stl"),sketch.loadModel("./stl/coin_b_p3.stl"),sketch.loadModel("./stl/coin_q_p1.stl"),sketch.loadModel("./stl/coin_q_p2.stl"),sketch.loadModel("./stl/coin_q_p3.stl")]
+        if (ACTUALLY_DRAW_COIN) {
+            sketch.coinBodyParts = [sketch.loadModel("./stl/coin_body.stl")]
+            sketch.coinDetails = [sketch.loadModel("./stl/coin_b_p1.stl"),sketch.loadModel("./stl/coin_b_p2.stl"),sketch.loadModel("./stl/coin_b_p3.stl"),sketch.loadModel("./stl/coin_q_p1.stl"),sketch.loadModel("./stl/coin_q_p2.stl"),sketch.loadModel("./stl/coin_q_p3.stl")]
+        }
     }
 
     sketch.setup = () => {
@@ -65,12 +69,16 @@ const s2 = (sketch) => {
             sketch.rotateZ(sketch.PI)
 
         }
-        sketch.noFill();
-        sketch.rotateX(sketch.PI/2);
-        sketch.cylinder(25,4);
-        //sketch.coinBodyParts.forEach((el)=>{sketch.model(el)})
-        //sketch.fill("#8d42af")
-        //sketch.coinDetails.forEach((el)=>{sketch.model(el)})        
+        
+        if (ACTUALLY_DRAW_COIN) {
+            sketch.coinBodyParts.forEach((el)=>{sketch.model(el)})
+            sketch.fill("#8d42af")
+            sketch.coinDetails.forEach((el)=>{sketch.model(el)}) 
+        } else {
+            sketch.noFill();
+            sketch.rotateX(sketch.PI/2);
+            sketch.cylinder(25,4);
+        }
         sketch.pop()
     }
 
