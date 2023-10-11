@@ -57,7 +57,8 @@ const s2 = (sketch) => {
         sketch.push()
         sketch.scale(-5)
         sketch.fill(220)
-        if (!ACTUALLY_DRAW_COIN) sketch.strokeWeight(1)
+        if (!ACTUALLY_DRAW_COIN) sketch.strokeWeight(1);
+        else sketch.strokeWeight(0);
         if (faceup == Q_FACE){
             sketch.translate(0,-0.14,0) 
             sketch.rotateX(sketch.PI/2)
