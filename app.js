@@ -1,6 +1,6 @@
 let gamemanager = new GameManager();
 
-const ACTUALLY_DRAW_COIN=false;
+const ACTUALLY_DRAW_COIN=true;
 
 const s = (sketch)=>{
 

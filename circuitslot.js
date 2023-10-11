@@ -50,6 +50,13 @@ class CircuitSlot extends Button {
             drawWidth += this.hoverFat;
             drawHeight += this.hoverFat;
         }
+
+        // If playing and the gate is currently doing stuff
+        if (this.slot == gamemanager.highlightedGate) {
+            drawWidth += this.hoverFat;
+            drawHeight += this.hoverFat;
+            sketch.strokeWeight(3);
+        }
         
         // Check if the button has been selected
         if (this.selected) {
@@ -77,6 +84,7 @@ class CircuitSlot extends Button {
                     break
             }
         }
+
         sketch.rect(this.x -drawWidth/2, this.y-drawHeight/2, drawWidth, drawHeight, 15)
         sketch.textAlign(sketch.CENTER)
         sketch.strokeWeight(0)

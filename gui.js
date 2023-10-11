@@ -169,6 +169,8 @@ class GUI {
             this.animating = true
             let newAnimation = this.animationQueue.shift()
             newAnimation()
+            this.gamemanager.highlight_next_gate();
+            console.log("thing happening, gate " + this.gamemanager.highlightedGate + "highlighted");
         } else if (this.animationQueue.length == 0 && this.gamemanager.gameState == PLAYING){
         // if queue is empty, and we are playing, game is over.
             this.circuitButtonSelectSecondGate.select_gate("?")
