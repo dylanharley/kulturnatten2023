@@ -18,6 +18,7 @@ const s = (sketch)=>{
         gamemanager.gui.drawGatesPanel()
         gamemanager.gui.drawCircuitDiagram()
         gamemanager.gui.drawClickables()
+        gamemanager.gui.drawGuidePanel();
     }
 
     sketch.windowResized = ()=>{

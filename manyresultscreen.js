@@ -65,9 +65,14 @@ class ManyResultScreen extends Clickable {
             // Draw text
             sketch.strokeWeight(0);
             sketch.fill(0);
+            sketch.text("Results",x,y-barHeight-h/4);
+
             sketch.text("Wins: " + this.wins, x - barWidth/2 - 10, y - barHeight*this.wins/1000 - 10);
             sketch.text("Losses: " + this.losses, x + barWidth/2 + 10, y - barHeight*this.losses/1000 - 10);
 
+            if (gamemanager.gameState == DISPLAYING_MANY_RESULTS) {
+                sketch.text("You win " + this.wins + "/1000!\nClick anywhere to play again.",x,y+h/4);
+            }
         }
         
     }

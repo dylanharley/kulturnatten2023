@@ -10,8 +10,8 @@ class ResultScreen extends Clickable {
     draw(sketch) {
         if (gamemanager.gameState != DISPLAYING_RESULT) return false;
         
-        let x = sketch.windowWidth / 2;
-        let y = sketch.windowHeight / 2 - 100;
+        let x = sketch.windowWidth / 2 + 300;
+        let y = sketch.windowHeight / 2 + 100;
         let w = 200;
         let h = 100;
 

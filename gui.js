@@ -71,6 +71,9 @@ class GUI {
         this.manyResultScreen = new ManyResultScreen();
         this.clickables.push(this.manyResultScreen);
 
+        // Guide panel
+        this.guidePanel = new GuidePanel();
+
         // CIRCUIT DIAGRAM SETTINGS
         this.circuitLineStrokeWeight = 1
 
@@ -300,5 +303,9 @@ class GUI {
         this.sketch.strokeWeight(this.circuitLineStrokeWeight)
         this.sketch.stroke(this.circuitLineStroke)
         this.sketch.line(this.circuitLineStartX,this.circuitLineY,this.circuitLineEndX,this.circuitLineY)
+    }
+
+    drawGuidePanel() {
+        this.guidePanel.draw(this.sketch);
     }
 }
