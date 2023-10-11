@@ -62,17 +62,30 @@ class GUI {
         })*/
         this.clickables.push(this.runThousandButton)
         
+
+        this.resultX = this.sketch.windowWidth - 300;
+        this.resultY = this.sketch.windowHeight/2 + 50;
+        this.resultWidth = 300;
+        this.resultHeight = 200;
+        this.resultBarHeight = 150;
+
+        this.guideX = 200;
+        this.guideY = this.sketch.windowHeight/2;
+        this.guideWidth = 300;
+        this.guideHeight = 200;
+
+
         // Result screen:
-        this.resultScreen = new ResultScreen();
+        this.resultScreen = new ResultScreen(this.resultX,this.resultY,this.resultWidth,this.resultHeight);
         //this.resultScreen.onclick(()=>{console.log("help"); if (this.gamemanager.gameState = DISPLAYING_RESULT) this.resultScreen.resultScreenClick(this.gamemanager)});
         this.clickables.push(this.resultScreen);
 
         // Many result screen:
-        this.manyResultScreen = new ManyResultScreen();
+        this.manyResultScreen = new ManyResultScreen(this.resultX,this.resultY,this.resultWidth,this.resultHeight,this.resultBarHeight);
         this.clickables.push(this.manyResultScreen);
 
         // Guide panel
-        this.guidePanel = new GuidePanel();
+        this.guidePanel = new GuidePanel(this.guideX,this.guideY,this.guideWidth,this.guideHeight);
 
         // CIRCUIT DIAGRAM SETTINGS
         this.circuitLineStrokeWeight = 1
