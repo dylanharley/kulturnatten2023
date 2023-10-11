@@ -2,6 +2,8 @@ const PICKING_SLOT = 0
 const PICKING_GATE = 1
 const PLAYING = 2
 const DISPLAYING_RESULT = 3
+const CALCULATING_MANY_RESULTS = 4;
+const DISPLAYING_MANY_RESULTS = 5;
 const LOSE = 0
 const WIN = 1
 
@@ -113,6 +115,15 @@ class GameManager {
 
         //this.set_state(PICKING_SLOT)
 
+    }
+
+    probability_of_win() {
+        if (this.circuitSlots[0] == "H" && this.circuitSlots[2] == "H") return 1;
+        else return 0.5;
+    }
+
+    play_many() {
+        this.set_state(CALCULATING_MANY_RESULTS);
     }
 
     reset() {

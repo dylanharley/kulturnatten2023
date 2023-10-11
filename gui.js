@@ -29,7 +29,7 @@ class GUI {
         this.runOnceButtonHeight = 50
         this.runOnceButtonColor = [255,100,100]
         this.runOnceButton = new Button("SPIL",this.runOnceButtonCenterX,this.runOnceButtonCenterY,this.runOnceButtonWidth, this.runOnceButtonHeight,this.runOnceButtonColor)
-        this.runOnceButton.onclick(()=>{if (this.gamemanager.gameState < 2) this.gamemanager.play_once()})
+        this.runOnceButton.onclick(()=>{if (this.gamemanager.gameState == PICKING_SLOT) this.gamemanager.play_once()})
         /*this.runOnceButton.onclick(()=>{
             if (this.gamemanager.gameState == PICKING_SLOT) {
                 console.log("play the game!");
@@ -52,7 +52,7 @@ class GUI {
         this.runThousandButtonHeight = 50
         this.runThousandButtonColor = [255,100,100]
         this.runThousandButton = new Button("SPIL x1000",this.runThousandButtonCenterX,this.runThousandButtonCenterY,this.runThousandButtonWidth, this.runThousandButtonHeight,this.runThousandButtonColor)
-        this.runThousandButton.onclick(()=>{if (this.coinSuperposition){this.desplitCoin()} else {this.splitCoin()}})
+        this.runThousandButton.onclick(()=>{if (this.gamemanager.gameState == PICKING_SLOT) this.gamemanager.play_many()})
         /*this.runThousandButton.onclick(()=>{
             if (this.gamemanager.gameState == 0) {
                 console.log("play the game 1000 times!");
@@ -64,8 +64,12 @@ class GUI {
         
         // Result screen:
         this.resultScreen = new ResultScreen();
-        this.resultScreen.onclick(()=>{console.log("help"); if (this.gamemanager.gameState = DISPLAYING_RESULT) this.resultScreen.resultScreenClick(this.gamemanager)});
+        //this.resultScreen.onclick(()=>{console.log("help"); if (this.gamemanager.gameState = DISPLAYING_RESULT) this.resultScreen.resultScreenClick(this.gamemanager)});
         this.clickables.push(this.resultScreen);
+
+        // Many result screen:
+        this.manyResultScreen = new ManyResultScreen();
+        this.clickables.push(this.manyResultScreen);
 
         // CIRCUIT DIAGRAM SETTINGS
         this.circuitLineStrokeWeight = 1
