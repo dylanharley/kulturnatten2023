@@ -6,4 +6,11 @@ class ResultScreen extends Clickable {
         }
     }
     ismouseover(sketch) {return true}
+
+    draw(sketch) {
+        if (gamemanager.gameState != DISPLAYING_RESULT) return false;
+        
+        gamemanager.lastResult;
+
+    }
 }
