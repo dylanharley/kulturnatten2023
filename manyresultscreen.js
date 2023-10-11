@@ -3,7 +3,7 @@ class ManyResultScreen extends Clickable {
     constructor() {
         super();
         this.timeWhenIStartedCalculatingLoadsOfGameRuns = -1;
-        this.speedAtWhichICalculateLoadsOfGameRuns = 0.01;
+        this.speedAtWhichICalculateLoadsOfGameRuns = 0.001;
         this.wins = 0;
         this.losses = 0;
     }
@@ -29,8 +29,46 @@ class ManyResultScreen extends Clickable {
                 if (win) this.wins++;
                 else this.losses++;
             }
-            if (this.wins + this.losses >= 1000) gamemanager.set_state(DISPLAYING_MANY_RESULTS);
+            // this looks a bit silly
+            gamemanager.highlightedGate = Math.round(Math.random()*4-0.5);
+
+            if (this.wins + this.losses >= 1000) {
+                gamemanager.set_state(DISPLAYING_MANY_RESULTS);
+                gamemanager.highlightedGate = -1;
+            }
         }
-        sketch.text("wins: " + this.wins + ", losses: " + this.losses,100,100);
+        if (gamemanager.gameState == CALCULATING_MANY_RESULTS || gamemanager.gameState == DISPLAYING_MANY_RESULTS) {
+            // Draw rectangle
+            let x = sketch.windowWidth / 2 + 300;
+            let y = sketch.windowHeight / 2 + 100;
+            let w = 250;
+            let h = 100;
+
+            let barHeight = 200;
+            let barWidth = 100;
+
+            sketch.strokeWeight(1);
+            sketch.stroke(0);
+            sketch.fill(200);
+            sketch.rect(x-w/2,y-barHeight - h/2,w,barHeight + h,15)
+
+
+            // Draw bar chart
+            sketch.strokeWeight(1);
+            sketch.stroke(0);
+            sketch.fill(0,200,0);
+            sketch.rect(x - barWidth - 10, y - barHeight*(this.wins/1000),barWidth,barHeight*this.wins/1000,0);
+
+            sketch.fill(200,0,0);
+            sketch.rect(x + 10, y - barHeight*(this.losses/1000),barWidth,barHeight*this.losses/1000,0);
+
+            // Draw text
+            sketch.strokeWeight(0);
+            sketch.fill(0);
+            sketch.text("Wins: " + this.wins, x - barWidth/2 - 10, y - barHeight*this.wins/1000 - 10);
+            sketch.text("Losses: " + this.losses, x + barWidth/2 + 10, y - barHeight*this.losses/1000 - 10);
+
+        }
+        
     }
 }
