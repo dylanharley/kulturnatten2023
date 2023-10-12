@@ -190,7 +190,7 @@ class GUI {
             let newAnimation = this.animationQueue.shift()
             newAnimation()
             this.gamemanager.highlight_next_gate();
-            console.log("thing happening, gate " + this.gamemanager.highlightedGate + "highlighted");
+//            console.log("thing happening, gate " + this.gamemanager.highlightedGate + "highlighted");
         } else if (this.animationQueue.length == 0 && this.gamemanager.gameState == PLAYING){
         // if queue is empty, and we are playing, game is over.
             this.circuitButtonSelectSecondGate.select_gate("?")
@@ -210,6 +210,9 @@ class GUI {
         var z = 0
         var rot = 0
         var coinSeparation = 300
+        var alphaFirstCoin = 128
+        var alphaSecondCoin = 127
+
 
         const oscillation = (t)=>{
             return 50*Math.sin(t)
@@ -266,18 +269,38 @@ class GUI {
 
 
         // Draw one or two coins depending on the state
+        // To simulate transparency, overlay a white cylinder with transparency instead
         if (this.coinSuperposition || this.coinAnimatingSuperposition) {
+            if (this.coinAnimatingSuperposition){
+                var dt = (this.sketch3D.millis()-this.coinStartAnimation)/1000
+                alphaFirstCoin = dt*255/Math.sqrt(2)
+                alphaSecondCoin = dt*128/Math.sqrt(2)
+            } else {
+                // Quite messy: this.CoinStartAnimation resets after each gate, so rn making sure that one full cycle happens before that
+                alphaFirstCoin = 255 * Math.abs(Math.sin(Math.PI/4+Math.PI*(this.sketch3D.millis()-this.coinStartAnimation)/1000))
+                alphaSecondCoin = 255 * Math.abs(Math.cos(Math.PI/4+Math.PI*(this.sketch3D.millis()-this.coinStartAnimation)/1000))
+            }
             this.sketch3D.translate(x, y, z)
             this.sketch3D.push()
             this.sketch3D.translate(coinSeparation/2,0,0)
             this.sketch3D.rotateZ(rot)
+
             this.sketch3D.drawCoin(1-this.coinFaceUp)
+            this.sketch3D.fill(255,alphaFirstCoin)
+            this.sketch3D.noStroke()
+            this.sketch3D.cylinder(75.5,22)
+
+        
+
             this.sketch3D.rotateZ(-rot)
             this.sketch3D.pop()
 
             this.sketch3D.translate(-coinSeparation/2,-1,0)
             this.sketch3D.rotateZ(rot)
             this.sketch3D.drawCoin(this.coinFaceUp)
+            this.sketch3D.fill(255,alphaSecondCoin)
+            this.sketch3D.noStroke()
+            this.sketch3D.cylinder(75.5,22)
             
         } else {
             this.sketch3D.translate(x, y, z)

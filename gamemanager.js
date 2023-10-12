@@ -26,7 +26,7 @@ class GameManager {
         this.highlightedGate = -1; // if between 0 and 2 then a gate should be highlighted
 
 
-        this.animations = {"I": ()=>{this.gui.wait()}, "X": ()=>{this.gui.flipCoin()}, "H": ()=>{if(!this.gui.coinSuperposition){this.gui.splitCoin()}else{this.gui.desplitCoin()}}}
+        this.animations = {"I": ()=>{this.gui.wait()}, "X": ()=>{this.gui.flipCoin()}, "H": ()=>{if(!this.gui.coinSuperposition){this.gui.splitCoin()}else{this.gui.desplitCoin()}}, "Wait": ()=>{this.gui.wait()}}
     }
 
     select_slot(slot){
@@ -110,16 +110,15 @@ class GameManager {
         this.gui.queueAnimation(this.animations[this.circuitSlots[1]])
         this.gui.queueAnimation(this.animations[this.circuitSlots[2]])
         // Hacky way to wait till animations are all done before showing results
-        this.gui.queueAnimation(this.animations["I"])
-        this.gui.queueAnimation(this.animations["I"])
+        this.gui.queueAnimation(this.animations["Wait"])
 
+        
         //this.set_state(PICKING_SLOT)
 
     }
 
     probability_of_win() {
-        if (this.circuitSlots[0] == "H" && this.circuitSlots[2] == "H") return 1;
-        else return 0.5;
+        return Math.pow(Math.abs(this.vectorState[0][0]),2)
     }
 
     play_many() {
