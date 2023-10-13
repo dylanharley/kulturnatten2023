@@ -42,13 +42,14 @@ class GUI {
         this.runThousandButton.onclick(()=>{if (this.gamemanager.gameState == PICKING_SLOT) this.gamemanager.play_many()})
         this.clickables.push(this.runThousandButton)
         
-
-        this.resultX = this.sketch.windowWidth - 300;
-        this.resultY = this.sketch.windowHeight/2 + 50;
-        this.resultWidth = 300;
-        this.resultHeight = 200;
+        // Coordinates for result popup
+        this.resultX = this.sketch.windowWidth/2;
+        this.resultY = this.sketch.windowHeight/2+25;
+        this.resultWidth = 400;
+        this.resultHeight = 300;
         this.resultBarHeight = 150;
 
+        // Coordinates for guide popup -> note that they are changed for other messages
         this.guideX = 200;
         this.guideY = this.sketch.windowHeight/2;
         this.guideWidth = 300;

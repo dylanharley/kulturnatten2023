@@ -88,15 +88,17 @@ class GuidePanel {
     draw(sketch) {
         this.update_state(sketch)
 
+        let arrow_color = "#808A9F"
+        let arrow_stroke = "#513C67"
         // Draw arrows
         if (this.displayHelp && this.currentState == PICKING_SLOT && !this.hasPickedGate){
-            this.draw_arrow(this.gamemanager.gui.circuitButtonSelectFirstGate.x, this.gamemanager.gui.circuitButtonSelectFirstGate.y-100, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)
-            this.draw_arrow(this.gamemanager.gui.circuitButtonSelectThirdGate.x, this.gamemanager.gui.circuitButtonSelectThirdGate.y-100, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)    
+            this.draw_arrow(this.gamemanager.gui.circuitButtonSelectFirstGate.x, this.gamemanager.gui.circuitButtonSelectFirstGate.y-100, Math.PI, arrow_color,arrow_stroke,1, 1.1+0.2*Math.sin(sketch.frameCount/60),sketch)
+            this.draw_arrow(this.gamemanager.gui.circuitButtonSelectThirdGate.x, this.gamemanager.gui.circuitButtonSelectThirdGate.y-100, Math.PI, arrow_color,arrow_stroke,1, 1.1+0.2*Math.sin(sketch.frameCount/60),sketch)    
         }
         if (this.displayHelp  && this.currentState == PICKING_GATE){
-            this.draw_arrow(this.gamemanager.gui.Xgate.x, this.gamemanager.gui.Xgate.y-150, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)
-            this.draw_arrow(this.gamemanager.gui.Hgate.x, this.gamemanager.gui.Hgate.y-150, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)    
-            this.draw_arrow(this.gamemanager.gui.Igate.x, this.gamemanager.gui.Igate.y-150, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)
+            this.draw_arrow(this.gamemanager.gui.Xgate.x, this.gamemanager.gui.Xgate.y-150, Math.PI, arrow_color,arrow_stroke,1, 1.1+0.2*Math.sin(sketch.frameCount/60),sketch)
+            this.draw_arrow(this.gamemanager.gui.Hgate.x, this.gamemanager.gui.Hgate.y-150, Math.PI, arrow_color,arrow_stroke,1, 1.1+0.2*Math.sin(sketch.frameCount/60),sketch)    
+            this.draw_arrow(this.gamemanager.gui.Igate.x, this.gamemanager.gui.Igate.y-150, Math.PI, arrow_color,arrow_stroke,1, 1.1+0.2*Math.sin(sketch.frameCount/60),sketch)
 
         }
 
