@@ -118,7 +118,8 @@ class GameManager {
     }
 
     probability_of_win() {
-        return Math.pow(Math.abs(this.vectorState[0][0]),2)
+        if (this.circuitSlots[0] == "H" && this.circuitSlots[1] == "H") {return 1}
+        else {return 0.5}
     }
 
     play_many() {

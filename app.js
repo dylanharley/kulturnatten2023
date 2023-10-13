@@ -11,9 +11,9 @@ const s = (sketch)=>{
         gamemanager.gui.set_2d_sketch(sketch)
         gamemanager.gui.init()
     }
-    
+    4
     sketch.draw = ()=>{
-        sketch.background(255)
+        sketch.background("#F5EEE0")
     
         gamemanager.gui.drawGatesPanel()
         gamemanager.gui.drawCircuitDiagram()
@@ -87,6 +87,7 @@ const s2 = (sketch) => {
     sketch.draw = ()=> {
         // rather arbitrary camera position.
         sketch.camera(0,-600,1000, 0, -100, 0)
+        sketch.ambientLight(400);
         sketch.clear()
         gamemanager.gui.draw3D()
 

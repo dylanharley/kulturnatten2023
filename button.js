@@ -53,9 +53,12 @@ class Button extends Clickable {
         }
 
         sketch.textAlign(sketch.CENTER)
-        sketch.strokeWeight(0)
+       // sketch.strokeWeight(1)
+     //   sketch.stroke(0)
         sketch.fill(0)
-        sketch.text(this.name, this.x, this.y)
+        sketch.noStroke()
+ //       sketch.textFont("Helvetica",20)
+        sketch.text(this.name, this.x, this.y+6)
     }
 
     click(){

@@ -107,11 +107,11 @@ class GUI {
         this.circuitButtonSelectThirdGate = new CircuitSlot("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100, 2)
         this.clickables.push(this.circuitButtonSelectThirdGate)
 
-        this.Xgate = new QuantumGate("Vend", this.gatesPanelPaddingLeft+100, this.sketch.windowHeight-100,100,100, [200,100,100], "X")
+        this.Xgate = new QuantumGate("VEND", this.gatesPanelPaddingLeft+100, this.sketch.windowHeight-100,100,100, [200,100,100], "X")
         this.clickables.push(this.Xgate)
-        this.Igate = new QuantumGate("Vend ikke", this.gatesPanelPaddingLeft + 0.5*this.gatesPanelWidth, this.sketch.windowHeight-100,100,100, [255,255,255],"I")
+        this.Igate = new QuantumGate("VEND EJ", this.gatesPanelPaddingLeft + 0.5*this.gatesPanelWidth, this.sketch.windowHeight-100,100,100, [255,255,255],"I")
         this.clickables.push(this.Igate)
-        this.Hgate = new QuantumGate("Superposition", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,100,100, [100,200,100], "H")
+        this.Hgate = new QuantumGate("SUPERPOSITION", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,100,100, [100,200,100], "H")
         this.clickables.push(this.Hgate)
 
 
@@ -273,12 +273,12 @@ class GUI {
         if (this.coinSuperposition || this.coinAnimatingSuperposition) {
             if (this.coinAnimatingSuperposition){
                 var dt = (this.sketch3D.millis()-this.coinStartAnimation)/1000
-                alphaFirstCoin = dt*255/Math.sqrt(2)
-                alphaSecondCoin = dt*128/Math.sqrt(2)
+                alphaFirstCoin = dt*180/Math.sqrt(2)
+                alphaSecondCoin = dt*180/Math.sqrt(2)
             } else {
                 // Quite messy: this.CoinStartAnimation resets after each gate, so rn making sure that one full cycle happens before that
-                alphaFirstCoin = 255 * Math.abs(Math.sin(Math.PI/4+Math.PI*(this.sketch3D.millis()-this.coinStartAnimation)/1000))
-                alphaSecondCoin = 255 * Math.abs(Math.cos(Math.PI/4+Math.PI*(this.sketch3D.millis()-this.coinStartAnimation)/1000))
+                alphaFirstCoin = 180 * Math.abs(Math.sin(Math.PI/4+Math.PI*(this.sketch3D.millis()-this.coinStartAnimation)/1000))
+                alphaSecondCoin = 180 * Math.abs(Math.cos(Math.PI/4+Math.PI*(this.sketch3D.millis()-this.coinStartAnimation)/1000))
             }
             this.sketch3D.translate(x, y, z)
             this.sketch3D.push()
