@@ -118,8 +118,10 @@ class GameManager {
     }
 
     probability_of_win() {
-        if (this.circuitSlots[0] == "H" && this.circuitSlots[1] == "H") {return 1}
-        else {return 0.5}
+        if (this.circuitSlots[0] == "H" && this.circuitSlots[2] == "H") {return 1}
+        else {
+            return 0.5
+        }
     }
 
     play_many() {
