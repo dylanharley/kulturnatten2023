@@ -14,7 +14,7 @@ class ResultScreen extends Clickable {
         this.titleBgColor = "#808A9F"
         this.titleColor = "#FFFFFF"
         this.bgColor = "#FFFFFF"
-        this.textColor = "#000000"
+        this.textColor = "#463F3A"
         this.winningText = "Mønten blev observeret i 'Q' tilstanden!"
         this.losingText = "Mønten blev observeret i '#' tilstanden!"
         this.superpositionText = "Mønten var i superposition af 'Q' og '#', og derfor var der 50% sandsynlighed for, at observere 'Q'."

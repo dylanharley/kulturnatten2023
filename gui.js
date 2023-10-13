@@ -17,8 +17,8 @@ class GUI {
         this.gatesPanelWidth = 2/3*this.sketch.windowWidth
         this.gatesPanelHeight = 160
 
-        this.gatesPanelFill = this.sketch.color(255,255,255)
-        this.gatesPanelStroke = this.sketch.color(0,0,0)
+        this.gatesPanelFill = this.sketch.color(255,250)
+        this.gatesPanelStroke = "#808A9F"
         this.gatesPanelStrokeWeight = 1
         this.gatesPanelCornerRadius = 15
 
@@ -42,12 +42,18 @@ class GUI {
         this.runThousandButton.onclick(()=>{if (this.gamemanager.gameState == PICKING_SLOT) this.gamemanager.play_many()})
         this.clickables.push(this.runThousandButton)
         
-        // Coordinates for result popup
+        // Coordinates for single result popup
         this.resultX = this.sketch.windowWidth/2;
         this.resultY = this.sketch.windowHeight/2+25;
         this.resultWidth = 400;
         this.resultHeight = 300;
-        this.resultBarHeight = 150;
+
+        // Coordinates for multiple results popup
+        this.resultsX = this.sketch.windowWidth-300
+        this.resultsY = this.sketch.windowHeight/2
+        this.resultsWidth = 400
+        this.resultsHeight = 350
+        this.resultsBarHeight = 150;
 
         // Coordinates for guide popup -> note that they are changed for other messages
         this.guideX = 200;
@@ -61,7 +67,7 @@ class GUI {
         this.clickables.push(this.resultScreen);
 
         // Many result screen:
-        this.manyResultScreen = new ManyResultScreen(this.resultX,this.resultY,this.resultWidth,this.resultHeight,this.resultBarHeight);
+        this.manyResultScreen = new ManyResultScreen(this.resultsX,this.resultsY,this.resultsWidth,this.resultsHeight,this.resultsBarHeight);
         this.clickables.push(this.manyResultScreen);
 
         // Guide panel

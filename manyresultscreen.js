@@ -10,7 +10,20 @@ class ManyResultScreen extends Clickable {
         this.posY = posY;
         this.width = width;
         this.height = height;
-        this.barHeight = barHeight;
+
+        // Hardcoded colors and stuff
+        this.titleBgColor = "#808A9F"
+        this.titleColor = "#FFFFFF"
+        this.bgColor = (255,250)
+        this.textColor = "#463F3A"
+
+        this.titleWidth = this.width*2/3
+        this.titleHeight = 50
+        this.barHeight = this.height/2;
+        this.barWidth = (this.width - 80)/2;
+
+
+
     }
 
     click(gamemanager) {
@@ -43,36 +56,43 @@ class ManyResultScreen extends Clickable {
             }
         }
         if (gamemanager.gameState == CALCULATING_MANY_RESULTS || gamemanager.gameState == DISPLAYING_MANY_RESULTS) {
-            // Draw rectangle
 
-            let barWidth = (this.width - 30)/2;
-
-            sketch.strokeWeight(1);
-            sketch.stroke(0);
-            sketch.fill(200);
-            sketch.rect(this.posX-this.width/2,this.posY-this.barHeight - this.height/2,this.width,this.barHeight + this.height,15)
-
+            
+            // Draw main rectangle
+            sketch.strokeWeight(2);
+            sketch.stroke(this.titleBgColor);
+            sketch.fill(this.bgColor);
+            sketch.rect(this.posX-this.width/2,this.posY - this.height/2,this.width, this.height,10)
+            // Draw title rectangle
+            sketch.noStroke()
+            sketch.fill(this.titleBgColor)
+            sketch.rect(this.posX-this.titleWidth/2, this.posY-this.height/2-this.titleHeight/2, this.titleWidth, this.titleHeight, 10)
+            // Draw title text
+            sketch.noStroke();
+            sketch.fill(this.titleColor);
+            sketch.text("RESULTATER",this.posX-this.titleWidth/2,this.posY-this.titleHeight/2-this.height/2, this.titleWidth, this.titleHeight);
+            // Draw bottom text
+            if (gamemanager.gameState == DISPLAYING_MANY_RESULTS) {
+                sketch.noStroke()
+                sketch.fill(this.textColor)
+                sketch.text("Du har vundet " + this.wins + " ud af 1000 spil!\nTryk hvor som helst for at starte forfra",this.posX,this.posY+this.height/3+15);
+            }
 
             // Draw bar chart
             sketch.strokeWeight(1);
-            sketch.stroke(0);
-            sketch.fill(0,200,0);
-            sketch.rect(this.posX - barWidth - 10, this.posY - this.barHeight*(this.wins/1000),barWidth,this.barHeight*this.wins/1000,0);
+            sketch.stroke(this.titleBgColor);
+            sketch.fill(100,200,100);
+            sketch.rect(this.posX - this.barWidth - 10, this.posY-this.barHeight*this.wins/1000+this.height/4, this.barWidth,this.barHeight*this.wins/1000,0);
 
-            sketch.fill(200,0,0);
-            sketch.rect(this.posX + 10, this.posY - this.barHeight*(this.losses/1000),barWidth,this.barHeight*this.losses/1000,0);
+            sketch.fill(200,100,100);
+            sketch.rect(this.posX + 10, this.posY-this.barHeight*this.losses/1000+this.height/4,this.barWidth,this.barHeight*this.losses/1000,0);
 
-            // Draw text
-            sketch.strokeWeight(0);
-            sketch.fill(0);
-            sketch.text("Results",this.posX,this.posY-this.barHeight-this.height/4);
 
-            sketch.text("Wins: " + this.wins, this.posX - barWidth/2 - 10, this.posY - this.barHeight*this.wins/1000 - 10);
-            sketch.text("Losses: " + this.losses, this.posX + barWidth/2 + 10, this.posY - this.barHeight*this.losses/1000 - 10);
+            sketch.noStroke()
+            sketch.fill(this.textColor)
+            sketch.text("'Q': " + this.wins, this.posX - this.barWidth/2 - 10, this.posY +this.height/4- this.barHeight*this.wins/1000 - 10);
+            sketch.text("'#': " + this.losses, this.posX + this.barWidth/2 + 10, this.posY +this.height/4-this.barHeight*this.losses/1000 - 10);
 
-            if (gamemanager.gameState == DISPLAYING_MANY_RESULTS) {
-                sketch.text("You win " + this.wins + "/1000!\nClick anywhere to play again.",this.posX,this.posY+this.height/4);
-            }
         }
         
     }
