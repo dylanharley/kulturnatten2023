@@ -52,13 +52,13 @@ class Button extends Clickable {
             sketch.rect(this.x -this.width/2, this.y-this.height/2, this.width, this.height, 15) // remember that rect() from p5 draws rectangle using x,y for upper left corner
         }
 
-        sketch.textAlign(sketch.CENTER)
+        sketch.textAlign(sketch.CENTER, sketch.CENTER)
        // sketch.strokeWeight(1)
      //   sketch.stroke(0)
         sketch.fill(0)
         sketch.noStroke()
  //       sketch.textFont("Helvetica",20)
-        sketch.text(this.name, this.x, this.y+6)
+        sketch.text(this.name, this.x-this.width/2, this.y-this.height/2, this.width, this.height)
     }
 
     click(){

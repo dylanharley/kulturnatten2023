@@ -78,20 +78,22 @@ class GUI {
         this.circuitLineSecondGateX = 2*(this.circuitLineEndX-this.circuitLineStartX)/4+this.circuitLineStartX
         this.circuitLineThirdGateX = 3*(this.circuitLineEndX-this.circuitLineStartX)/4+this.circuitLineStartX
 
+        // Circuit diagram buttons
         this.circuitButtonSelectFirstGate = new CircuitSlot("First gate", this.circuitLineFirstGateX, this.circuitLineY, 100, 100, 0)
-        this.clickables.push(this.circuitButtonSelectFirstGate)
         this.circuitButtonSelectSecondGate = new CircuitSlot("Second gate", this.circuitLineSecondGateX, this.circuitLineY, 100, 100, 1)
+        this.circuitButtonSelectThirdGate = new CircuitSlot("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100, 2)
         this.circuitButtonSelectSecondGate.toggle_hide()
         this.circuitButtonSelectSecondGate.select_gate("?")
+        this.clickables.push(this.circuitButtonSelectFirstGate)
         this.clickables.push(this.circuitButtonSelectSecondGate)
-        this.circuitButtonSelectThirdGate = new CircuitSlot("Third gate", this.circuitLineThirdGateX, this.circuitLineY, 100, 100, 2)
         this.clickables.push(this.circuitButtonSelectThirdGate)
 
-        this.Xgate = new QuantumGate("VEND", this.gatesPanelPaddingLeft+100, this.sketch.windowHeight-100,100,100, [200,100,100], "X")
+        // Gate buttons
+        this.Xgate = new QuantumGate("VEND", this.gatesPanelPaddingLeft+100, this.sketch.windowHeight-100,150,100, [200,100,100], "X")
+        this.Igate = new QuantumGate("VEND EJ", this.gatesPanelPaddingLeft + 0.5*this.gatesPanelWidth, this.sketch.windowHeight-100,150,100, [255,255,255],"I")
+        this.Hgate = new QuantumGate("SUPERPOSITION", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,150,100, [100,200,100], "H")
         this.clickables.push(this.Xgate)
-        this.Igate = new QuantumGate("VEND EJ", this.gatesPanelPaddingLeft + 0.5*this.gatesPanelWidth, this.sketch.windowHeight-100,100,100, [255,255,255],"I")
         this.clickables.push(this.Igate)
-        this.Hgate = new QuantumGate("SUPERPOSITION", this.gatesPanelPaddingLeft + this.gatesPanelWidth-100, this.sketch.windowHeight-100,100,100, [100,200,100], "H")
         this.clickables.push(this.Hgate)
 
 

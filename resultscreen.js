@@ -66,11 +66,11 @@ class ResultScreen extends Clickable {
             } else {
                 sketch.text(this.winningText, this.posX - this.width/2, this.posY - this.height/2, this.width, this.height/3)
             }
-            if (Math.pow(Math.abs(gamemanager.vectorState[0][0]),2) < 0.6){
+            // Hacky test for superposition...
+            if ( Math.abs(Math.pow(Math.abs(gamemanager.vectorState[0][0]),2)-0.5) < 0.1){
                 sketch.text(this.superpositionText, this.posX - this.width/2, this.posY + this.height/6, this.width, this.height/3)
             } else {
                 sketch.text(this.deterministicText, this.posX - this.width/2, this.posY + this.height/6, this.width, this.height/3)
-
             }
             sketch.pop()
 
