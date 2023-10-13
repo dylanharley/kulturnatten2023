@@ -30,19 +30,6 @@ class GUI {
         this.runOnceButtonColor = [255,100,100]
         this.runOnceButton = new Button("SPIL",this.runOnceButtonCenterX,this.runOnceButtonCenterY,this.runOnceButtonWidth, this.runOnceButtonHeight,this.runOnceButtonColor)
         this.runOnceButton.onclick(()=>{if (this.gamemanager.gameState == PICKING_SLOT) this.gamemanager.play_once()})
-        /*this.runOnceButton.onclick(()=>{
-            if (this.gamemanager.gameState == PICKING_SLOT) {
-                console.log("play the game!");
-                this.clickables.forEach((element)=>{
-                    if (element.hidden == 1) {
-                        if (Math.random() > 0.5) element.gateType = "X";
-                        else element.gateType = "I";
-                    }
-                })
-            } else {
-                console.log("it was very foolish of you to press this button at that moment")
-            }
-        })*/
         this.clickables.push(this.runOnceButton)
 
         // "Run 1000 times" button
@@ -53,13 +40,6 @@ class GUI {
         this.runThousandButtonColor = [255,100,100]
         this.runThousandButton = new Button("SPIL x1000",this.runThousandButtonCenterX,this.runThousandButtonCenterY,this.runThousandButtonWidth, this.runThousandButtonHeight,this.runThousandButtonColor)
         this.runThousandButton.onclick(()=>{if (this.gamemanager.gameState == PICKING_SLOT) this.gamemanager.play_many()})
-        /*this.runThousandButton.onclick(()=>{
-            if (this.gamemanager.gameState == 0) {
-                console.log("play the game 1000 times!");
-            } else {
-                console.log("once again very foolish")
-            }
-        })*/
         this.clickables.push(this.runThousandButton)
         
 
@@ -77,7 +57,6 @@ class GUI {
 
         // Result screen:
         this.resultScreen = new ResultScreen(this.resultX,this.resultY,this.resultWidth,this.resultHeight);
-        //this.resultScreen.onclick(()=>{console.log("help"); if (this.gamemanager.gameState = DISPLAYING_RESULT) this.resultScreen.resultScreenClick(this.gamemanager)});
         this.clickables.push(this.resultScreen);
 
         // Many result screen:
@@ -85,7 +64,7 @@ class GUI {
         this.clickables.push(this.manyResultScreen);
 
         // Guide panel
-        this.guidePanel = new GuidePanel(this.guideX,this.guideY,this.guideWidth,this.guideHeight);
+        this.guidePanel = new GuidePanel(this.guideX,this.guideY,this.guideWidth,this.guideHeight, this.gamemanager);
 
         // CIRCUIT DIAGRAM SETTINGS
         this.circuitLineStrokeWeight = 1

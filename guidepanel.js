@@ -1,6 +1,8 @@
 class GuidePanel {
 
-    constructor(posX,posY,width,height) {
+    constructor(posX,posY,width,height, gm) {
+
+        this.gamemanager = gm
 
         this.posX = posX;
         this.posY = posY;
@@ -18,26 +20,30 @@ class GuidePanel {
         // Text
         this.textSize = 15
         this.startText = "De to bokse ovenfor repræsenterer din strategi. Du kan vælge, om du vil vende mønten eller ej, eller om du vil bruge en kvantestrategi.\n\nTryk på en af boksene for at se de mulige træk."
+        this.startTitle =  "VÆLG DIN STRATEGI"
         this.displayText = this.startText
-        this.boxTitle = "VÆLG DIN STRATEGI"
+        this.boxTitle = this.startTitle
         // State tracking
         this.displayHelp = true
         this.currentState = PICKING_SLOT
         this.hasPickedGate = false
         this.hasShownPlayMessage = false
+        this.showArrows = true
     }
 
     reset(){
         this.displayHelp = true
-        this.currentState = gamemanager.gameState
+        this.currentState = this.gamemanager.gameState
         this.hasPickedGate = false
         this.hasShownPlayMessage = false
+        this.displayText = this.startText
+        this.boxTitle = this.startTitle
     }
 
     update_state(sketch){
-        if (gamemanager.gameState != this.currentState){
+        if (this.gamemanager.gameState != this.currentState){
             // State has changed!
-            if (gamemanager.gameState != PICKING_SLOT && gamemanager.gameState != PICKING_GATE){
+            if (this.gamemanager.gameState != PICKING_SLOT && this.gamemanager.gameState != PICKING_GATE){
                 this.displayHelp = false
             }
             if (!this.hasPickedGate){
@@ -55,12 +61,44 @@ class GuidePanel {
                     this.displayHelp = false
                 }
             } 
-            this.currentState = gamemanager.gameState
+            this.currentState = this.gamemanager.gameState
         }
+    }
+
+    draw_arrow(x,y,angle,fill,stroke,strokeW, scale, sketch){
+        sketch.push()
+        sketch.fill(fill)
+        sketch.stroke(stroke)
+        sketch.strokeWeight(strokeW/scale)
+        sketch.translate(x,y)
+        sketch.rotate(angle)
+        sketch.scale(scale)
+        sketch.beginShape()
+        sketch.vertex(10,30)
+        sketch.vertex(10,0)
+        sketch.vertex(20,0)
+        sketch.vertex(0,-30)
+        sketch.vertex(-20,0)
+        sketch.vertex(-10,0)
+        sketch.vertex(-10,30)
+        sketch.endShape(sketch.CLOSE)
+        sketch.pop()
     }
 
     draw(sketch) {
         this.update_state(sketch)
+
+        // Draw arrows
+        if (this.displayHelp && this.currentState == PICKING_SLOT && !this.hasPickedGate){
+            this.draw_arrow(this.gamemanager.gui.circuitButtonSelectFirstGate.x, this.gamemanager.gui.circuitButtonSelectFirstGate.y-100, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)
+            this.draw_arrow(this.gamemanager.gui.circuitButtonSelectThirdGate.x, this.gamemanager.gui.circuitButtonSelectThirdGate.y-100, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)    
+        }
+        if (this.displayHelp  && this.currentState == PICKING_GATE){
+            this.draw_arrow(this.gamemanager.gui.Xgate.x, this.gamemanager.gui.Xgate.y-150, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)
+            this.draw_arrow(this.gamemanager.gui.Hgate.x, this.gamemanager.gui.Hgate.y-150, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)    
+            this.draw_arrow(this.gamemanager.gui.Igate.x, this.gamemanager.gui.Igate.y-150, Math.PI, 255,0,1, 1.2+0.3*Math.sin(sketch.frameCount/60),sketch)
+
+        }
 
         if (this.displayHelp) {
             sketch.fill(this.bgColor)
